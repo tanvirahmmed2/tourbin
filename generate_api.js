@@ -572,6 +572,23 @@ export async function GET() {
     return NextResponse.json({ success: false, message: err.message }, { status: 500 });
   }
 }
+
+export async function POST(request) {
+  try {
+    const auth = await isOwner();
+    if (!auth.success) return NextResponse.json(auth, { status: 403 });
+    const { name, slug, description, monthly_price, yearly_price, max_tours, max_bookings_per_month, max_staff, custom_domain, analytics, is_active } = await request.json();
+    if (!name || !slug) return NextResponse.json({ success: false, message: 'Name and slug required' }, { status: 400 });
+
+    const res = await query(
+      "INSERT INTO ts_packages (name, slug, description, monthly_price, yearly_price, max_tours, max_bookings_per_month, max_staff, custom_domain, analytics, is_active) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11) RETURNING *",
+      [name, slug, description, monthly_price, yearly_price, max_tours, max_bookings_per_month, max_staff, custom_domain, analytics, is_active !== false]
+    );
+    return NextResponse.json({ success: true, data: { package: res.rows[0] } });
+  } catch (err) {
+    return NextResponse.json({ success: false, message: err.message }, { status: 500 });
+  }
+}
 `);
 
 writeRoute('control/payments/route.js', `
@@ -955,3 +972,281 @@ export async function PATCH(request) {
   }
 }
 `);
+
+// ============================================================================
+// NEW MISSING ROUTES
+// ============================================================================
+
+writeRoute('control/packages/[packageId]/route.js', `
+import { NextResponse } from 'next/server';
+import { query } from '@/lib/db';
+import { isOwner } from '@/lib/middleware';
+
+export async function PATCH(request, { params }) {
+  try {
+    const auth = await isOwner();
+    if (!auth.success) return NextResponse.json(auth, { status: 403 });
+    const body = await request.json();
+    
+    let queryStr = "UPDATE ts_packages SET ";
+    const values = [];
+    let count = 1;
+    
+    const allowedFields = ['name', 'slug', 'description', 'monthly_price', 'yearly_price', 'max_tours', 'max_bookings_per_month', 'max_staff', 'custom_domain', 'analytics', 'is_active'];
+    for (const key of allowedFields) {
+      if (body[key] !== undefined) {
+        queryStr += \`\${key} = $\${count}, \`;
+        values.push(body[key]);
+        count++;
+      }
+    }
+    
+    if (values.length === 0) return NextResponse.json({ success: false, message: 'No updates provided' }, { status: 400 });
+    
+    queryStr = queryStr.slice(0, -2) + \` WHERE package_id = $\${count}\`;
+    values.push(params.packageId);
+
+    await query(queryStr, values);
+    return NextResponse.json({ success: true });
+  } catch (err) {
+    return NextResponse.json({ success: false, message: err.message }, { status: 500 });
+  }
+}
+
+export async function DELETE(request, { params }) {
+  try {
+    const auth = await isOwner();
+    if (!auth.success) return NextResponse.json(auth, { status: 403 });
+    await query("DELETE FROM ts_packages WHERE package_id = $1", [params.packageId]);
+    return NextResponse.json({ success: true });
+  } catch (err) {
+    return NextResponse.json({ success: false, message: err.message }, { status: 500 });
+  }
+}
+`);
+
+writeRoute('control/subscriptions/[subscriptionId]/route.js', `
+import { NextResponse } from 'next/server';
+import { query } from '@/lib/db';
+import { isOwner } from '@/lib/middleware';
+
+export async function PATCH(request, { params }) {
+  try {
+    const auth = await isOwner();
+    if (!auth.success) return NextResponse.json(auth, { status: 403 });
+    const { status, auto_renew } = await request.json();
+    
+    let queryStr = "UPDATE ts_subscriptions SET ";
+    const values = [];
+    let count = 1;
+    
+    if (status !== undefined) { queryStr += \`status = $\${count}, \`; values.push(status); count++; }
+    if (auto_renew !== undefined) { queryStr += \`auto_renew = $\${count}, \`; values.push(auto_renew); count++; }
+    
+    if (values.length === 0) return NextResponse.json({ success: false, message: 'No updates provided' }, { status: 400 });
+    
+    queryStr = queryStr.slice(0, -2) + \` WHERE subscription_id = $\${count}\`;
+    values.push(params.subscriptionId);
+
+    await query(queryStr, values);
+    return NextResponse.json({ success: true });
+  } catch (err) {
+    return NextResponse.json({ success: false, message: err.message }, { status: 500 });
+  }
+}
+`);
+
+writeRoute('control/invoices/route.js', `
+import { NextResponse } from 'next/server';
+import { query } from '@/lib/db';
+import { isManager } from '@/lib/middleware';
+
+export async function GET() {
+  try {
+    const auth = await isManager();
+    if (!auth.success) return NextResponse.json(auth, { status: 403 });
+    const res = await query(\`
+      SELECT i.*, t.name as tenant_name 
+      FROM ts_invoices i
+      JOIN ts_tenants t ON t.tenant_id = i.tenant_id
+      ORDER BY i.created_at DESC
+    \`);
+    return NextResponse.json({ success: true, data: { invoices: res.rows } });
+  } catch (err) {
+    return NextResponse.json({ success: false, message: err.message }, { status: 500 });
+  }
+}
+
+export async function POST(request) {
+  try {
+    const auth = await isManager();
+    if (!auth.success) return NextResponse.json(auth, { status: 403 });
+    const { tenant_id, subscription_id, invoice_number, amount, status, due_date } = await request.json();
+    if (!tenant_id || !invoice_number || amount === undefined) {
+      return NextResponse.json({ success: false, message: 'tenant_id, invoice_number, and amount required' }, { status: 400 });
+    }
+    const res = await query(
+      "INSERT INTO ts_invoices (tenant_id, subscription_id, invoice_number, amount, status, due_date) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *",
+      [tenant_id, subscription_id || null, invoice_number, amount, status || 'unpaid', due_date || null]
+    );
+    return NextResponse.json({ success: true, data: { invoice: res.rows[0] } });
+  } catch (err) {
+    return NextResponse.json({ success: false, message: err.message }, { status: 500 });
+  }
+}
+`);
+
+writeRoute('control/invoices/[invoiceId]/route.js', `
+import { NextResponse } from 'next/server';
+import { query } from '@/lib/db';
+import { isManager } from '@/lib/middleware';
+
+export async function PATCH(request, { params }) {
+  try {
+    const auth = await isManager();
+    if (!auth.success) return NextResponse.json(auth, { status: 403 });
+    const { status } = await request.json();
+    if (!status) return NextResponse.json({ success: false, message: 'Status required' }, { status: 400 });
+    
+    await query("UPDATE ts_invoices SET status = $1 WHERE invoice_id = $2", [status, params.invoiceId]);
+    return NextResponse.json({ success: true });
+  } catch (err) {
+    return NextResponse.json({ success: false, message: err.message }, { status: 500 });
+  }
+}
+
+export async function DELETE(request, { params }) {
+  try {
+    const auth = await isManager();
+    if (!auth.success) return NextResponse.json(auth, { status: 403 });
+    await query("DELETE FROM ts_invoices WHERE invoice_id = $1", [params.invoiceId]);
+    return NextResponse.json({ success: true });
+  } catch (err) {
+    return NextResponse.json({ success: false, message: err.message }, { status: 500 });
+  }
+}
+`);
+
+writeRoute('control/domains/route.js', `
+import { NextResponse } from 'next/server';
+import { query } from '@/lib/db';
+import { isManager } from '@/lib/middleware';
+
+export async function GET() {
+  try {
+    const auth = await isManager();
+    if (!auth.success) return NextResponse.json(auth, { status: 403 });
+    const res = await query(\`
+      SELECT d.*, t.name as tenant_name 
+      FROM ts_domains d
+      JOIN ts_tenants t ON t.tenant_id = d.tenant_id
+      ORDER BY d.created_at DESC
+    \`);
+    return NextResponse.json({ success: true, data: { domains: res.rows } });
+  } catch (err) {
+    return NextResponse.json({ success: false, message: err.message }, { status: 500 });
+  }
+}
+`);
+
+writeRoute('control/domains/[domainId]/route.js', `
+import { NextResponse } from 'next/server';
+import { query } from '@/lib/db';
+import { isManager } from '@/lib/middleware';
+
+export async function PATCH(request, { params }) {
+  try {
+    const auth = await isManager();
+    if (!auth.success) return NextResponse.json(auth, { status: 403 });
+    const { verified, is_primary } = await request.json();
+    
+    let queryStr = "UPDATE ts_domains SET ";
+    const values = [];
+    let count = 1;
+    
+    if (verified !== undefined) { queryStr += \`verified = $\${count}, \`; values.push(verified); count++; }
+    if (is_primary !== undefined) { queryStr += \`is_primary = $\${count}, \`; values.push(is_primary); count++; }
+    
+    if (values.length === 0) return NextResponse.json({ success: false, message: 'No updates provided' }, { status: 400 });
+    
+    queryStr = queryStr.slice(0, -2) + \` WHERE domain_id = $\${count}\`;
+    values.push(params.domainId);
+
+    await query(queryStr, values);
+    return NextResponse.json({ success: true });
+  } catch (err) {
+    return NextResponse.json({ success: false, message: err.message }, { status: 500 });
+  }
+}
+
+export async function DELETE(request, { params }) {
+  try {
+    const auth = await isManager();
+    if (!auth.success) return NextResponse.json(auth, { status: 403 });
+    await query("DELETE FROM ts_domains WHERE domain_id = $1", [params.domainId]);
+    return NextResponse.json({ success: true });
+  } catch (err) {
+    return NextResponse.json({ success: false, message: err.message }, { status: 500 });
+  }
+}
+`);
+
+writeRoute('control/websites/route.js', `
+import { NextResponse } from 'next/server';
+import { query } from '@/lib/db';
+import { isManager } from '@/lib/middleware';
+
+export async function GET() {
+  try {
+    const auth = await isManager();
+    if (!auth.success) return NextResponse.json(auth, { status: 403 });
+    const res = await query(\`
+      SELECT w.*, t.name as tenant_name 
+      FROM tour_websites w
+      JOIN ts_tenants t ON t.tenant_id = w.tenant_id
+      ORDER BY w.created_at DESC
+    \`);
+    return NextResponse.json({ success: true, data: { websites: res.rows } });
+  } catch (err) {
+    return NextResponse.json({ success: false, message: err.message }, { status: 500 });
+  }
+}
+`);
+
+writeRoute('control/websites/[websiteId]/route.js', `
+import { NextResponse } from 'next/server';
+import { query } from '@/lib/db';
+import { isManager } from '@/lib/middleware';
+
+export async function PATCH(request, { params }) {
+  try {
+    const auth = await isManager();
+    if (!auth.success) return NextResponse.json(auth, { status: 403 });
+    const body = await request.json();
+    
+    let queryStr = "UPDATE tour_websites SET ";
+    const values = [];
+    let count = 1;
+    
+    const allowedFields = ['logo_url', 'theme_color', 'hero_title', 'hero_subtitle'];
+    for (const key of allowedFields) {
+      if (body[key] !== undefined) {
+        queryStr += \`\${key} = $\${count}, \`;
+        values.push(body[key]);
+        count++;
+      }
+    }
+    
+    if (values.length === 0) return NextResponse.json({ success: false, message: 'No updates provided' }, { status: 400 });
+    
+    queryStr += \`updated_at = NOW() WHERE website_id = $\${count}\`;
+    values.push(params.websiteId);
+
+    await query(queryStr, values);
+    return NextResponse.json({ success: true });
+  } catch (err) {
+    return NextResponse.json({ success: false, message: err.message }, { status: 500 });
+  }
+}
+`);
+

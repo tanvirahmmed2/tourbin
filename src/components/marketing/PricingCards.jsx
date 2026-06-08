@@ -3,7 +3,6 @@ import axios from 'axios';
 import { useState as __useState, useEffect as __useEffect, useCallback as __useCallback } from 'react';
 import Link from 'next/link';
 
-
 export function PricingCards({ showDescriptions = false }) {
   
   const fetchUrl = '/api/public/packages';
@@ -16,7 +15,7 @@ export function PricingCards({ showDescriptions = false }) {
     setError(null);
     try {
       const res = await axios.get(fetchUrl, { withCredentials: true });
-      setData(res.data);
+      setData(res.data?.data?.packages || []);
     } catch (err) {
       if (err.response && err.response.status === 401) {
         window.location.href = '/login';
@@ -29,8 +28,6 @@ export function PricingCards({ showDescriptions = false }) {
   }, [fetchUrl]);
 
   __useEffect(() => { fetchData(); }, [fetchData]);
-  
-
 
   if (loading) return <div className="text-center p-12 text-text-3 font-semibold">Loading packages...</div>;
   if (error || !data || data.length === 0) return <div className="text-center p-12 text-text-3 font-semibold">No packages found.</div>;
@@ -71,9 +68,9 @@ export function PricingCards({ showDescriptions = false }) {
 
           <ul className="list-none flex flex-col gap-3 flex-1 p-0 m-0">
             {(pkg.features || []).map((f) => (
-              <li key={f} className="text-sm text-text-2 flex items-center gap-2.5">
+              <li key={f.feature_id || f.name || f} className="text-sm text-text-2 flex items-center gap-2.5">
                 <span className="text-emerald-500 text-sm shrink-0">✓</span> 
-                <span>{f}</span>
+                <span>{f.name || f} {f.value ? `: ${f.value}` : ''}</span>
               </li>
             ))}
           </ul>
