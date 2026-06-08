@@ -10,34 +10,8 @@ export async function POST(request) {
       return NextResponse.json({ success: false, message: 'Email and password required' }, { status: 400 });
     }
 
-    const host = request.headers.get('host');
-    const SAAS_DOMAIN = process.env.SAAS_DOMAIN || 'localhost:3000';
-    const isSaas = host === SAAS_DOMAIN || host === BASE_DOMAIN.split(':')[0];
-
-    let user = null;
-
-    if (isSaas) {
-      const saasResult = await query("SELECT * FROM ts_users WHERE email = $1 LIMIT 1", [email.toLowerCase().trim()]);
-      if (saasResult.rows.length > 0) user = saasResult.rows[0];
-    } else {
-      let tenantSlug = host.split('.')[0];
-      if (host.includes('localhost') && host.split('.').length === 1) {
-         tenantSlug = null; 
-      }
-      
-      if (tenantSlug) {
-        const tenantRes = await query("SELECT tenant_id FROM ts_tenants WHERE slug = $1", [tenantSlug]);
-        if (tenantRes.rows.length > 0) {
-          const tenantId = tenantRes.rows[0].tenant_id;
-          const tourRes = await query("SELECT * FROM tour_users WHERE email = $1 AND tenant_id = $2 LIMIT 1", [email.toLowerCase().trim(), tenantId]);
-          if (tourRes.rows.length > 0) {
-             user = tourRes.rows[0];
-             user.tenant_id = tenantId;
-             user.tenant_slug = tenantSlug;
-          }
-        }
-      }
-    }
+    const userRes = await query("SELECT * FROM ts_users WHERE email = $1 LIMIT 1", [email.toLowerCase().trim()]);
+    const user = userRes.rows.length > 0 ? userRes.rows[0] : null;
 
     if (!user) {
       return NextResponse.json({ success: false, message: 'Invalid credentials' }, { status: 401 });

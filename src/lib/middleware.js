@@ -62,12 +62,7 @@ export async function getAuthenticatedContext() {
         const userId = decoded.id || decoded._id || decoded.user_id;
         if (!decoded || !userId) return null;
 
-        let res;
-        if (decoded.tenant_id) {
-           res = await query("SELECT user_id, name, email, role FROM tour_users WHERE user_id = $1", [userId]);
-        } else {
-           res = await query("SELECT user_id, name, email, role FROM ts_users WHERE user_id = $1", [userId]);
-        }
+        const res = await query("SELECT user_id, name, email, role FROM ts_users WHERE user_id = $1", [userId]);
 
         if (res.rows.length === 0) return null;
         const user = res.rows[0];

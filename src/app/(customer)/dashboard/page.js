@@ -9,19 +9,18 @@ export default async function CustomerDashboardPage() {
   if (!auth.success) redirect('/login');
   const session = auth.data;
   
-  // We link the ts_users (SaaS customer) to their ts_tenants via their email address.
-  // When a package is purchased, a tour_users admin record is created with the same email.
+  // We link the ts_users (SaaS customer) to their ts_tenants via their purchases.
   const workspacesRes = await query(`
     SELECT t.tenant_id, t.name AS tenant_name, t.slug, t.status, t.created_at,
-           p.name AS plan_name, p.max_tours, p.max_bookings_per_month,
+           pk.name AS plan_name, pk.max_tours, pk.max_bookings_per_month,
            s.status AS subscription_status
     FROM ts_tenants t
-    JOIN tour_users tu ON tu.tenant_id = t.tenant_id
+    JOIN ts_purchases p ON p.tenant_id = t.tenant_id
     LEFT JOIN ts_subscriptions s ON s.tenant_id = t.tenant_id AND s.status = 'active'
-    LEFT JOIN ts_packages p ON p.package_id = s.package_id
-    WHERE tu.email = $1 AND tu.role = 'owner'
+    LEFT JOIN ts_packages pk ON pk.package_id = s.package_id
+    WHERE p.user_id = $1
     ORDER BY t.created_at DESC
-  `, [session.email]);
+  `, [session.user_id]);
 
   const workspaces = workspacesRes.rows;
 

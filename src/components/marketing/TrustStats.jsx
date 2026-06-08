@@ -13,7 +13,7 @@ export function TrustStats() {
     setError(null);
     try {
       const res = await axios.get(fetchUrl, { withCredentials: true });
-      setData(res.data);
+      setData(res.data?.data || null);
     } catch (err) {
       if (err.response && err.response.status === 401) {
         window.location.href = '/login';

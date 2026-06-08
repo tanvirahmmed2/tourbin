@@ -12,8 +12,8 @@ export async function GET() {
         SELECT
           (SELECT COUNT(*) FROM ts_tenants)                                                   AS total_tenants,
           (SELECT COUNT(*) FROM ts_tenants WHERE status = 'active')                           AS active_tenants,
-          (SELECT COUNT(*) FROM tour_users WHERE role != 'super_admin')                       AS total_users,
-          (SELECT COUNT(*) FROM tour_bookings)                                                AS total_bookings,
+          (SELECT COUNT(*) FROM ts_users WHERE role = 'customer')                             AS total_users,
+          (SELECT COUNT(*) FROM ts_purchases WHERE status = 'paid')                           AS total_bookings,
           (SELECT COALESCE(SUM(amount), 0) FROM ts_subscription_payments
            WHERE status = 'success' AND created_at > NOW() - INTERVAL '30 days')              AS monthly_revenue
       `),

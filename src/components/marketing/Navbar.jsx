@@ -1,6 +1,7 @@
 'use client';
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
 const NAV_LINKS = [
   { href: '/features', label: 'Features' },
@@ -10,6 +11,7 @@ const NAV_LINKS = [
 ];
 
 export default function Navbar({ session }) {
+  const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -29,12 +31,15 @@ export default function Navbar({ session }) {
 
         {/* Desktop Nav */}
         <nav className="hidden md:flex items-center gap-8">
-          {NAV_LINKS.map((link) => (
-            <Link key={link.href} href={link.href} className="group relative text-sm font-bold text-text-2 hover:text-text transition-colors duration-300 py-1">
-              {link.label}
-              <span className="absolute bottom-0 left-0 w-0 h-[2px] bg-primary transition-all duration-300 group-hover:w-full rounded-full" />
-            </Link>
-          ))}
+          {NAV_LINKS.map((link) => {
+            const isActive = pathname === link.href;
+            return (
+              <Link key={link.href} href={link.href} className={`group relative text-sm font-bold transition-colors duration-300 py-1 ${isActive ? 'text-text' : 'text-text-2 hover:text-text'}`}>
+                {link.label}
+                <span className={`absolute bottom-0 left-0 h-[2px] bg-primary transition-all duration-300 rounded-full ${isActive ? 'w-full' : 'w-0 group-hover:w-full'}`} />
+              </Link>
+            );
+          })}
         </nav>
 
         <div className="hidden md:flex items-center gap-4">
@@ -70,16 +75,19 @@ export default function Navbar({ session }) {
       {menuOpen && (
         <div className="absolute top-full left-0 right-0 bg-white/95 backdrop-blur-xl border-b border-slate-200/80 py-6 shadow-xl flex flex-col md:hidden">
           <div className="container flex flex-col gap-4">
-            {NAV_LINKS.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className="block py-2 text-base font-semibold text-text-2 hover:text-text border-b border-slate-200/40"
-                onClick={() => setMenuOpen(false)}
-              >
-                {link.label}
-              </Link>
-            ))}
+            {NAV_LINKS.map((link) => {
+              const isActive = pathname === link.href;
+              return (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className={`block py-2 text-base font-semibold border-b border-slate-200/40 ${isActive ? 'text-primary' : 'text-text-2 hover:text-text'}`}
+                  onClick={() => setMenuOpen(false)}
+                >
+                  {link.label}
+                </Link>
+              );
+            })}
             <div className="flex flex-col gap-3 pt-4">
               {session ? (
                 <Link href={session.tenant_id ? '/' : (session.role === 'owner' ? '/control/owner' : session.role === 'manager' ? '/control/manager' : session.role === 'support' ? '/control/support' : '/dashboard')} className="btn-custom-primary text-center w-full" onClick={() => setMenuOpen(false)}>

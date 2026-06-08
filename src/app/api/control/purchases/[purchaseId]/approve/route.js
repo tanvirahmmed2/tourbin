@@ -39,12 +39,6 @@ export async function POST(request, { params }) {
         "INSERT INTO ts_subscription_payments (subscription_id, amount, provider, status, paid_at) VALUES ($1, $2, 'manual', 'success', NOW())",
         [subRes.rows[0].subscription_id, purchase.amount]
       );
-
-      // 5. Create Tenant Admin inside tour_users
-      await client.query(
-        "INSERT INTO tour_users (tenant_id, name, email, password, role) VALUES ($1, $2, $3, $4, 'owner')",
-        [newTenant.tenant_id, meta.tenantAdminName, meta.tenantAdminEmail, meta.tenantAdminPasswordHashed]
-      );
     });
 
     return NextResponse.json({ success: true, message: 'Approved successfully' });

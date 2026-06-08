@@ -14,11 +14,11 @@ export default async function CustomerBillingPage() {
     FROM ts_subscription_payments p
     JOIN ts_subscriptions s ON s.subscription_id = p.subscription_id
     JOIN ts_tenants t ON t.tenant_id = s.tenant_id
-    JOIN tour_users tu ON tu.tenant_id = t.tenant_id
+    JOIN ts_purchases pur ON pur.tenant_id = t.tenant_id
     JOIN ts_packages pkg ON pkg.package_id = s.package_id
-    WHERE tu.email = $1 AND tu.role = 'owner'
+    WHERE pur.user_id = $1
     ORDER BY p.created_at DESC
-  `, [session.email]);
+  `, [session.user_id]);
 
   const payments = billingRes.rows;
 
