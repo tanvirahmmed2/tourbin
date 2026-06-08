@@ -1,10 +1,10 @@
 import { NextResponse } from 'next/server';
 import { query } from '@/lib/db';
-import { isCustomer, hashPassword } from '@/lib/middleware';
+import { isLogin, hashPassword } from '@/lib/middleware';
 
 export async function GET() {
   try {
-    const auth = await isCustomer();
+    const auth = await isLogin();
     if (!auth.success) return NextResponse.json(auth, { status: 403 });
     const res = await query("SELECT user_id, name, email FROM ts_users WHERE user_id = $1", [auth.data.user_id]);
     return NextResponse.json({ success: true, data: { profile: res.rows[0] } });
@@ -15,7 +15,7 @@ export async function GET() {
 
 export async function PATCH(request) {
   try {
-    const auth = await isCustomer();
+    const auth = await isLogin();
     if (!auth.success) return NextResponse.json(auth, { status: 403 });
 
     const { name, email, password } = await request.json();

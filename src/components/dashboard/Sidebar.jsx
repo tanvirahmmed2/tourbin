@@ -46,6 +46,7 @@ const PANELS = {
         section: 'SaaS Management',
         links: [
           { href: '/control/manager/tenants', label: 'Tenants', icon: '🏢' },
+          { href: '/control/manager/packages', label: 'Packages', icon: '📦' },
           { href: '/control/manager/purchases', label: 'Purchases', icon: '🛒' },
         ],
       },

@@ -1,10 +1,10 @@
 import { NextResponse } from 'next/server';
 import { query } from '@/lib/db';
-import { isCustomer } from '@/lib/middleware';
+import { isLogin } from '@/lib/middleware';
 
 export async function GET() {
   try {
-    const auth = await isCustomer();
+    const auth = await isLogin();
     if (!auth.success) return NextResponse.json(auth, { status: 403 });
     const res = await query("SELECT * FROM ts_reviews WHERE user_id = $1 LIMIT 1", [auth.data.user_id]);
     return NextResponse.json({ success: true, data: { review: res.rows[0] || null } });
@@ -15,7 +15,7 @@ export async function GET() {
 
 export async function POST(request) {
   try {
-    const auth = await isCustomer();
+    const auth = await isLogin();
     if (!auth.success) return NextResponse.json(auth, { status: 403 });
     
     const { rating, comment } = await request.json();

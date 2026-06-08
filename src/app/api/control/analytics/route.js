@@ -1,10 +1,10 @@
 import { NextResponse } from 'next/server';
 import { query } from '@/lib/db';
-import { isOwner } from '@/lib/middleware';
+import { isManager } from '@/lib/middleware';
 
 export async function GET() {
   try {
-    const auth = await isOwner();
+    const auth = await isManager();
     if (!auth.success) return NextResponse.json(auth, { status: 403 });
 
     const [revenueRes, tenantRes] = await Promise.all([

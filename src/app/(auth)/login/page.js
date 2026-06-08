@@ -28,7 +28,20 @@ export default function LoginPage() {
 
       if (data.success) {
         toast.success('Logged in successfully!');
-        router.push('/dashboard');
+        const role = data.data?.role;
+        const tenantId = data.data?.tenant_id;
+
+        if (tenantId) {
+          router.push('/');
+        } else if (role === 'owner') {
+          router.push('/control/owner');
+        } else if (role === 'manager') {
+          router.push('/control/manager');
+        } else if (role === 'support') {
+          router.push('/control/support');
+        } else {
+          router.push('/dashboard');
+        }
         router.refresh();
       } else {
         toast.error(data.message || 'Failed to login');

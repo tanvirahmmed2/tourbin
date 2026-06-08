@@ -1,9 +1,10 @@
-import { isCustomer } from '@/lib/middleware';
+import { isLogin } from '@/lib/middleware';
 import { redirect } from 'next/navigation';
 import { query } from '@/lib/db';
+import Link from 'next/link';
 
-export default async function CustomerBillingPage() {
-  const auth = await isCustomer();
+export default async function BillingPage() {
+  const auth = await isLogin();
   if (!auth.success) redirect('/login');
   const session = auth.data;
 
