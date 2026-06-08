@@ -2,6 +2,8 @@ import { NextResponse } from 'next/server';
 import { query } from '@/lib/db';
 import { isManager } from '@/lib/middleware';
 
+const slugify = (text) => text ? text.toString().toLowerCase().trim().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '') : '';
+
 export async function GET() {
   try {
     const auth = await isManager();
@@ -17,12 +19,14 @@ export async function POST(request) {
   try {
     const auth = await isManager();
     if (!auth.success) return NextResponse.json(auth, { status: 403 });
-    const { name, slug, description, monthly_price, yearly_price, max_tours, max_bookings_per_month, max_staff, custom_domain, analytics, is_active, image, image_id } = await request.json();
-    if (!name || !slug) return NextResponse.json({ success: false, message: 'Name and slug required' }, { status: 400 });
+    const { name, description, monthly_price, yearly_price, max_tours, max_bookings_per_month, max_staff, custom_domain, analytics, is_active, image, image_id, features } = await request.json();
+    if (!name) return NextResponse.json({ success: false, message: 'Name required' }, { status: 400 });
+    
+    const slug = slugify(name);
 
     const res = await query(
-      "INSERT INTO ts_packages (name, slug, description, monthly_price, yearly_price, max_tours, max_bookings_per_month, max_staff, custom_domain, analytics, is_active, image, image_id) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13) RETURNING *",
-      [name, slug, description, monthly_price, yearly_price, max_tours, max_bookings_per_month, max_staff, custom_domain, analytics, is_active !== false, image, image_id]
+      "INSERT INTO ts_packages (name, slug, description, monthly_price, yearly_price, max_tours, max_bookings_per_month, max_staff, custom_domain, analytics, is_active, image, image_id, features) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14) RETURNING *",
+      [name, slug, description, monthly_price, yearly_price, max_tours, max_bookings_per_month, max_staff, custom_domain, analytics, is_active !== false, image, image_id, JSON.stringify(features || [])]
     );
     return NextResponse.json({ success: true, data: { package: res.rows[0] } });
   } catch (err) {

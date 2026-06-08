@@ -9,7 +9,7 @@ export default function NewPackagePage() {
   const [loading, setLoading] = useState(false);
   const [uploading, setUploading] = useState(false);
   const [formData, setFormData] = useState({
-    name: '', slug: '', description: '', 
+    name: '', description: '', 
     monthly_price: 0, yearly_price: 0,
     max_tours: 10, max_bookings_per_month: 100, max_staff: 2,
     custom_domain: false, analytics: false, is_active: true,
@@ -59,82 +59,89 @@ export default function NewPackagePage() {
   return (
     <div className="max-w-3xl mx-auto">
       <div className="flex items-center gap-4 mb-8">
-        <Link href="/control/manager/packages" className="btn btn-ghost btn-sm">← Back</Link>
-        <h1 className="text-3xl font-extrabold text-text">Add New Package</h1>
+        <Link href="/control/manager/packages" className="px-4 py-2 text-sm font-bold text-text-2 bg-white border border-border rounded-xl hover:bg-slate-50 transition-colors">
+          ← Back
+        </Link>
+        <h1 className="text-2xl font-extrabold text-text">Add New Package</h1>
       </div>
 
-      <form onSubmit={handleSubmit} className="bg-white/5 border border-primary/20 rounded-2xl p-8 flex flex-col gap-6">
-        <div className="grid grid-cols-2 gap-6">
-          <div className="form-control">
-            <label className="label"><span className="label-text">Name</span></label>
-            <input type="text" name="name" value={formData.name} onChange={handleChange} required className="input input-bordered" />
-          </div>
-          <div className="form-control">
-            <label className="label"><span className="label-text">Slug</span></label>
-            <input type="text" name="slug" value={formData.slug} onChange={handleChange} required className="input input-bordered" />
+      <form onSubmit={handleSubmit} className="bg-white border border-border rounded-2xl p-8 flex flex-col gap-6 shadow-sm">
+        <div className="grid grid-cols-1 gap-6">
+          <div>
+            <label className="block text-sm font-medium text-text-2 mb-1.5">Name</label>
+            <input type="text" name="name" value={formData.name} onChange={handleChange} required className="w-full px-4 py-3 bg-bg border border-border rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all text-text" placeholder="e.g. Starter Plan" />
           </div>
         </div>
 
-        <div className="form-control">
-          <label className="label"><span className="label-text">Description</span></label>
-          <textarea name="description" value={formData.description} onChange={handleChange} className="textarea textarea-bordered" rows="3"></textarea>
+        <div>
+          <label className="block text-sm font-medium text-text-2 mb-1.5">Description</label>
+          <textarea name="description" value={formData.description} onChange={handleChange} className="w-full px-4 py-3 bg-bg border border-border rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all text-text" rows="3" placeholder="Brief description of the plan..."></textarea>
         </div>
 
-        <div className="form-control">
-          <label className="label"><span className="label-text">Package Image (Cloudinary)</span></label>
+        <div>
+          <label className="block text-sm font-medium text-text-2 mb-1.5">Package Image (Cloudinary)</label>
           <div className="flex items-center gap-4">
-            <input type="file" accept="image/*" onChange={handleImageUpload} className="file-input file-input-bordered w-full max-w-xs" disabled={uploading} />
-            {uploading && <span className="text-sm text-text-3">Uploading...</span>}
+            <input type="file" accept="image/*" onChange={handleImageUpload} className="block w-full text-sm text-text-2 file:mr-4 file:py-2.5 file:px-4 file:rounded-xl file:border-0 file:text-sm file:font-semibold file:bg-primary/10 file:text-primary hover:file:bg-primary/20 transition-all cursor-pointer border border-border rounded-xl bg-bg" disabled={uploading} />
+            {uploading && <span className="text-sm font-semibold text-primary animate-pulse">Uploading...</span>}
           </div>
           {formData.image && (
-            <img src={formData.image} alt="Preview" className="mt-4 w-48 h-32 object-cover rounded-xl border border-primary/20" />
+            <div className="mt-4 relative inline-block">
+              <img src={formData.image} alt="Preview" className="w-48 h-32 object-cover rounded-xl border border-border shadow-sm" />
+              <div className="absolute inset-0 rounded-xl ring-1 ring-inset ring-black/10"></div>
+            </div>
           )}
         </div>
 
-        <div className="grid grid-cols-2 gap-6">
-          <div className="form-control">
-            <label className="label"><span className="label-text">Monthly Price ($)</span></label>
-            <input type="number" name="monthly_price" value={formData.monthly_price} onChange={handleChange} className="input input-bordered" />
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div>
+            <label className="block text-sm font-medium text-text-2 mb-1.5">Monthly Price ($)</label>
+            <input type="number" name="monthly_price" value={formData.monthly_price} onChange={handleChange} className="w-full px-4 py-3 bg-bg border border-border rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all text-text" />
           </div>
-          <div className="form-control">
-            <label className="label"><span className="label-text">Yearly Price ($)</span></label>
-            <input type="number" name="yearly_price" value={formData.yearly_price} onChange={handleChange} className="input input-bordered" />
-          </div>
-        </div>
-
-        <div className="grid grid-cols-3 gap-6">
-          <div className="form-control">
-            <label className="label"><span className="label-text">Max Tours</span></label>
-            <input type="number" name="max_tours" value={formData.max_tours} onChange={handleChange} className="input input-bordered" />
-          </div>
-          <div className="form-control">
-            <label className="label"><span className="label-text">Max Bookings/mo</span></label>
-            <input type="number" name="max_bookings_per_month" value={formData.max_bookings_per_month} onChange={handleChange} className="input input-bordered" />
-          </div>
-          <div className="form-control">
-            <label className="label"><span className="label-text">Max Staff</span></label>
-            <input type="number" name="max_staff" value={formData.max_staff} onChange={handleChange} className="input input-bordered" />
+          <div>
+            <label className="block text-sm font-medium text-text-2 mb-1.5">Yearly Price ($)</label>
+            <input type="number" name="yearly_price" value={formData.yearly_price} onChange={handleChange} className="w-full px-4 py-3 bg-bg border border-border rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all text-text" />
           </div>
         </div>
 
-        <div className="flex gap-8 mt-4">
-          <label className="cursor-pointer label justify-start gap-3">
-            <input type="checkbox" name="custom_domain" checked={formData.custom_domain} onChange={handleChange} className="checkbox checkbox-primary" />
-            <span className="label-text">Custom Domain</span>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div>
+            <label className="block text-sm font-medium text-text-2 mb-1.5">Max Tours</label>
+            <input type="number" name="max_tours" value={formData.max_tours} onChange={handleChange} className="w-full px-4 py-3 bg-bg border border-border rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all text-text" />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-text-2 mb-1.5">Max Bookings/mo</label>
+            <input type="number" name="max_bookings_per_month" value={formData.max_bookings_per_month} onChange={handleChange} className="w-full px-4 py-3 bg-bg border border-border rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all text-text" />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-text-2 mb-1.5">Max Staff</label>
+            <input type="number" name="max_staff" value={formData.max_staff} onChange={handleChange} className="w-full px-4 py-3 bg-bg border border-border rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all text-text" />
+          </div>
+        </div>
+
+        <div className="flex flex-wrap gap-8 mt-2 bg-slate-50 p-6 rounded-xl border border-slate-100">
+          <label className="flex items-center gap-3 cursor-pointer group">
+            <div className="relative flex items-center">
+              <input type="checkbox" name="custom_domain" checked={formData.custom_domain} onChange={handleChange} className="w-5 h-5 rounded border-border text-primary focus:ring-primary focus:ring-offset-2 transition-all cursor-pointer accent-primary" />
+            </div>
+            <span className="text-sm font-bold text-text-2 group-hover:text-text transition-colors">Custom Domain</span>
           </label>
-          <label className="cursor-pointer label justify-start gap-3">
-            <input type="checkbox" name="analytics" checked={formData.analytics} onChange={handleChange} className="checkbox checkbox-primary" />
-            <span className="label-text">Analytics</span>
+          <label className="flex items-center gap-3 cursor-pointer group">
+            <div className="relative flex items-center">
+              <input type="checkbox" name="analytics" checked={formData.analytics} onChange={handleChange} className="w-5 h-5 rounded border-border text-primary focus:ring-primary focus:ring-offset-2 transition-all cursor-pointer accent-primary" />
+            </div>
+            <span className="text-sm font-bold text-text-2 group-hover:text-text transition-colors">Analytics</span>
           </label>
-          <label className="cursor-pointer label justify-start gap-3">
-            <input type="checkbox" name="is_active" checked={formData.is_active} onChange={handleChange} className="checkbox checkbox-primary" />
-            <span className="label-text">Is Active</span>
+          <label className="flex items-center gap-3 cursor-pointer group">
+            <div className="relative flex items-center">
+              <input type="checkbox" name="is_active" checked={formData.is_active} onChange={handleChange} className="w-5 h-5 rounded border-border text-primary focus:ring-primary focus:ring-offset-2 transition-all cursor-pointer accent-primary" />
+            </div>
+            <span className="text-sm font-bold text-text-2 group-hover:text-text transition-colors">Is Active</span>
           </label>
         </div>
 
-        <div className="mt-8">
-          <button type="submit" disabled={loading || uploading} className="btn btn-primary w-full">
-            {loading ? 'Creating...' : 'Create Package'}
+        <div className="mt-4 pt-6 border-t border-slate-100">
+          <button type="submit" disabled={loading || uploading} className="w-full py-3.5 px-4 bg-primary text-white font-bold rounded-xl hover:opacity-90 focus:ring-2 focus:ring-offset-2 focus:ring-primary transition-all disabled:opacity-50 disabled:cursor-not-allowed">
+            {loading ? 'Creating Package...' : 'Create Package'}
           </button>
         </div>
       </form>

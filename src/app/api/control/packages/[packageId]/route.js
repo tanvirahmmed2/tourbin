@@ -13,7 +13,7 @@ export async function PATCH(request, { params }) {
     const values = [];
     let count = 1;
     
-    const allowedFields = ['name', 'slug', 'description', 'monthly_price', 'yearly_price', 'max_tours', 'max_bookings_per_month', 'max_staff', 'custom_domain', 'analytics', 'is_active', 'image', 'image_id'];
+    const allowedFields = ['name', 'slug', 'description', 'monthly_price', 'yearly_price', 'max_tours', 'max_bookings_per_month', 'max_staff', 'custom_domain', 'analytics', 'is_active', 'image', 'image_id', 'features'];
     for (const key of allowedFields) {
       if (body[key] !== undefined) {
         queryStr += `${key} = $${count}, `;
