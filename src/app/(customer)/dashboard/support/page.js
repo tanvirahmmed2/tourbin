@@ -192,7 +192,8 @@ export default function CustomerSupportPage() {
                  <div>
                    <h2 className="text-xl font-bold text-slate-800 mb-1">{thread.ticket.subject}</h2>
                    <div className="text-xs text-slate-500 font-medium">
-                   Created on {new Date(thread.ticket.created_at).toLocaleString()}
+                     Created on {new Date(thread.ticket.created_at).toLocaleString()}
+                   </div>
                  </div>
                </div>
                <span className={`text-[10px] font-bold uppercase px-3 py-1.5 rounded-lg border ${STATUS_COLORS[thread.ticket.status]}`}>
