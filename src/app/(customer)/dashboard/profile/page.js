@@ -57,7 +57,7 @@ export default function CustomerProfilePage() {
 
         <div>
           <label className="block text-xs font-bold text-slate-500 uppercase mb-2">New Password (Optional)</label>
-          <input type="password" placeholder="Leave blank to keep current" value={formData.password} onChange={e => setFormData({...formData, password: e.target.value})} className="input-custom" />
+          <input type="password" value={formData.password} onChange={e => setFormData({...formData, password: e.target.value})} className="input-custom" />
         </div>
 
         <button disabled={saving} type="submit" className="w-full btn-custom-primary mt-2">

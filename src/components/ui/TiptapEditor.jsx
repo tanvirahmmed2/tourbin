@@ -1,9 +1,8 @@
 import { useEditor, EditorContent } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
-import Placeholder from '@tiptap/extension-placeholder';
 import TextAlign from '@tiptap/extension-text-align';
 
-export default function TiptapEditor({ value, onChange, placeholder = 'Type here...' }) {
+export default function TiptapEditor({ value, onChange }) {
   const editor = useEditor({
     extensions: [
       StarterKit.configure({
@@ -13,9 +12,6 @@ export default function TiptapEditor({ value, onChange, placeholder = 'Type here
       }),
       TextAlign.configure({
         types: ['heading', 'paragraph'],
-      }),
-      Placeholder.configure({
-        placeholder,
       }),
     ],
     content: value,
@@ -153,13 +149,6 @@ export default function TiptapEditor({ value, onChange, placeholder = 'Type here
       <EditorContent editor={editor} />
       
       <style dangerouslySetInnerHTML={{ __html: `
-        .ProseMirror p.is-editor-empty:first-child::before {
-          content: attr(data-placeholder);
-          float: left;
-          color: #94a3b8;
-          pointer-events: none;
-          height: 0;
-        }
         .ProseMirror a { color: #0ea5e9; text-decoration: underline; }
         .ProseMirror ul { list-style-type: disc; padding-left: 1.5rem; margin-top: 0.5rem; margin-bottom: 0.5rem; }
         .ProseMirror ol { list-style-type: decimal; padding-left: 1.5rem; margin-top: 0.5rem; margin-bottom: 0.5rem; }

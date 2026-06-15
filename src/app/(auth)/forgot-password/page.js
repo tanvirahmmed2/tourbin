@@ -67,7 +67,7 @@ export default function ForgotPasswordPage() {
             className="input-custom" 
             required 
             disabled={loading}
-            placeholder="you@example.com"
+           
           />
         </div>
         

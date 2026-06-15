@@ -84,7 +84,7 @@ export default function CustomerReviewPage() {
             value={formData.comment} 
             onChange={e => setFormData({...formData, comment: e.target.value})} 
             className="input-custom"
-            placeholder="Tell us what you love or what we could improve..."
+           
           />
         </div>
 

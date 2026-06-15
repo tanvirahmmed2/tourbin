@@ -1,4 +1,6 @@
+'use client';
 import Link from 'next/link';
+import { motion } from 'framer-motion';
 
 const BENEFITS = [
   { icon: '⏱️', title: 'Save 10+ hours/week', desc: 'Automate booking confirmations, reminders, and payment receipts. No more manual follow-ups.' },
@@ -12,7 +14,12 @@ export default function BenefitsSection() {
     <section className="py-24">
       <div className="container">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 max-w-6xl mx-auto items-center">
-          <div>
+          <motion.div
+            initial={{ opacity: 0, x: -30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, margin: "-50px" }}
+            transition={{ duration: 0.6 }}
+          >
             <div className="badge badge-primary mb-4">Why Tourbin</div>
             <h2 className="text-[clamp(1.75rem,4vw,2.75rem)] font-extrabold tracking-tight leading-[1.15] text-left text-text">
               Built for tour operators who want to <span className="gradient-text">grow faster</span>
@@ -23,8 +30,14 @@ export default function BenefitsSection() {
             <Link href="/pricing" className="px-6 py-3 rounded-xl bg-primary text-white font-bold text-sm hover:bg-primary-dark transition-all duration-300 hover:shadow-[0_4px_15px_rgba(79,70,229,0.25)] active:scale-[0.98] inline-block">
               View Packages →
             </Link>
-          </div>
-          <div className="flex flex-col gap-6 bg-white border border-slate-200/80 rounded-3xl p-8 shadow-sm shadow-slate-100/50">
+          </motion.div>
+          <motion.div 
+            initial={{ opacity: 0, x: 30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, margin: "-50px" }}
+            transition={{ duration: 0.6 }}
+            className="flex flex-col gap-6 bg-white border border-slate-200/80 rounded-3xl p-8 shadow-sm shadow-slate-100/50"
+          >
             {BENEFITS.map((b) => (
               <div key={b.title} className="flex gap-4 items-start">
                 <div className="text-2xl w-11 h-11 rounded-xl bg-slate-50 border border-slate-200/60 flex items-center justify-center shrink-0">{b.icon}</div>
@@ -34,7 +47,7 @@ export default function BenefitsSection() {
                 </div>
               </div>
             ))}
-          </div>
+          </motion.div>
         </div>
       </div>
     </section>

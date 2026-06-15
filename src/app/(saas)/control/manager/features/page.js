@@ -77,7 +77,7 @@ export default function FeaturesPage() {
               type="text" 
               value={newFeatureName} 
               onChange={(e) => setNewFeatureName(e.target.value)} 
-              placeholder="e.g. Dedicated Account Manager" 
+              
               className="input-custom flex-1" 
               required
             />

@@ -149,7 +149,7 @@ export default function CustomerSupportPage() {
                    required 
                    value={formData.subject} 
                    onChange={e => setFormData({...formData, subject: e.target.value})} 
-                   placeholder="Brief description of the issue"
+                  
                    className="input-custom" 
                  />
                </div>
@@ -171,7 +171,7 @@ export default function CustomerSupportPage() {
                  <TiptapEditor
                    value={formData.message}
                    onChange={html => setFormData({...formData, message: html})}
-                   placeholder="Describe your issue in detail..."
+                  
                  />
                </div>
                <button disabled={creating} type="submit" className="btn-custom-primary w-full py-3">
@@ -251,7 +251,7 @@ export default function CustomerSupportPage() {
                     <TiptapEditor
                       value={replyMessage}
                       onChange={html => setReplyMessage(html)}
-                      placeholder="Type your reply to support..."
+                     
                     />
                     <button
                       onClick={sendReply}

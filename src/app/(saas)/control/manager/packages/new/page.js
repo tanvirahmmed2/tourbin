@@ -69,7 +69,7 @@ export default function NewPackagePage() {
         <div className="grid grid-cols-1 gap-6">
           <div>
             <label className="block text-sm font-semibold text-slate-700 mb-1.5">Name</label>
-            <input type="text" name="name" value={formData.name} onChange={handleChange} required className="input-custom" placeholder="e.g. Starter Plan" />
+            <input type="text" name="name" value={formData.name} onChange={handleChange} required className="input-custom" />
           </div>
         </div>
 
@@ -78,7 +78,7 @@ export default function NewPackagePage() {
           <TiptapEditor
             value={formData.description}
             onChange={(html) => setFormData(prev => ({ ...prev, description: html }))}
-            placeholder="Brief description of the plan..."
+           
           />
         </div>
 

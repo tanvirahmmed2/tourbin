@@ -56,7 +56,7 @@ export default function CreateTenantPage() {
 
           <div className="flex flex-col gap-2 mb-4">
             <label className="text-sm font-semibold text-slate-700 mb-1">Organisation Name *</label>
-            <input className="input-custom" value={form.name} onChange={set('name')} required placeholder="Acme Tours Ltd" />
+            <input className="input-custom" value={form.name} onChange={set('name')} required />
           </div>
 
           <div className="flex flex-col gap-2 mb-4">
@@ -67,7 +67,7 @@ export default function CreateTenantPage() {
                 value={form.slug}
                 onChange={setSlug}
                 required
-                placeholder="acme-tours"
+               
                 pattern="[a-z0-9\-]+"
                 title="Lowercase letters, numbers, and hyphens only"
               />

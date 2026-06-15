@@ -217,7 +217,7 @@ export default function WorkspaceManagementPage() {
                         required 
                         value={renewData.transaction_id}
                         onChange={e => setRenewData({...renewData, transaction_id: e.target.value})}
-                        placeholder="e.g. 8N17XXXX"
+                       
                         className="w-full text-sm px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg focus:ring-primary focus:border-primary outline-none uppercase font-mono transition-colors"
                       />
                       <div className="text-[10px] text-text-3 mt-1.5 leading-relaxed">
@@ -271,40 +271,40 @@ export default function WorkspaceManagementPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
               <label className="block text-sm font-bold text-text-2 mb-1.5">Company / Website Name</label>
-              <input type="text" name="name" value={formData.name} onChange={handleChange} className="w-full px-4 py-2.5 bg-bg border border-border rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all text-sm font-medium" placeholder="My Tour Company" />
+              <input type="text" name="name" value={formData.name} onChange={handleChange} className="w-full px-4 py-2.5 bg-bg border border-border rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all text-sm font-medium" />
             </div>
             <div>
               <label className="block text-sm font-bold text-text-2 mb-1.5">Tagline</label>
-              <input type="text" name="tagline" value={formData.tagline} onChange={handleChange} className="w-full px-4 py-2.5 bg-bg border border-border rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all text-sm font-medium" placeholder="Best tours in town!" />
+              <input type="text" name="tagline" value={formData.tagline} onChange={handleChange} className="w-full px-4 py-2.5 bg-bg border border-border rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all text-sm font-medium" />
             </div>
             <div>
               <label className="block text-sm font-bold text-text-2 mb-1.5">Public Email</label>
-              <input type="email" name="email" value={formData.email} onChange={handleChange} className="w-full px-4 py-2.5 bg-bg border border-border rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all text-sm font-medium" placeholder="contact@example.com" />
+              <input type="email" name="email" value={formData.email} onChange={handleChange} className="w-full px-4 py-2.5 bg-bg border border-border rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all text-sm font-medium" />
             </div>
             <div>
               <label className="block text-sm font-bold text-text-2 mb-1.5">Public Phone</label>
-              <input type="text" name="phone" value={formData.phone} onChange={handleChange} className="w-full px-4 py-2.5 bg-bg border border-border rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all text-sm font-medium" placeholder="+1 555-0123" />
+              <input type="text" name="phone" value={formData.phone} onChange={handleChange} className="w-full px-4 py-2.5 bg-bg border border-border rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all text-sm font-medium" />
             </div>
           </div>
 
           <div>
             <label className="block text-sm font-bold text-text-2 mb-1.5">Business Address</label>
-            <textarea name="address" value={formData.address} onChange={handleChange} rows="2" className="w-full px-4 py-2.5 bg-bg border border-border rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all text-sm font-medium" placeholder="123 Tour Street..."></textarea>
+            <textarea name="address" value={formData.address} onChange={handleChange} rows="2" className="w-full px-4 py-2.5 bg-bg border border-border rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all text-sm font-medium"></textarea>
           </div>
           
           <div>
             <label className="block text-sm font-bold text-text-2 mb-1.5">Social Media Link</label>
-            <input type="text" name="sociallink" value={formData.sociallink} onChange={handleChange} className="w-full px-4 py-2.5 bg-bg border border-border rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all text-sm font-medium" placeholder="https://instagram.com/..." />
+            <input type="text" name="sociallink" value={formData.sociallink} onChange={handleChange} className="w-full px-4 py-2.5 bg-bg border border-border rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all text-sm font-medium" />
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-4 border-t border-slate-100">
              <div>
               <label className="block text-sm font-bold text-text-2 mb-1.5">Hero Title</label>
-              <input type="text" name="hero_title" value={formData.hero_title} onChange={handleChange} className="w-full px-4 py-2.5 bg-bg border border-border rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all text-sm font-medium" placeholder="Welcome to..." />
+              <input type="text" name="hero_title" value={formData.hero_title} onChange={handleChange} className="w-full px-4 py-2.5 bg-bg border border-border rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all text-sm font-medium" />
             </div>
             <div>
               <label className="block text-sm font-bold text-text-2 mb-1.5">Hero Subtitle</label>
-              <input type="text" name="hero_subtitle" value={formData.hero_subtitle} onChange={handleChange} className="w-full px-4 py-2.5 bg-bg border border-border rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all text-sm font-medium" placeholder="Book your adventure today" />
+              <input type="text" name="hero_subtitle" value={formData.hero_subtitle} onChange={handleChange} className="w-full px-4 py-2.5 bg-bg border border-border rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all text-sm font-medium" />
             </div>
           </div>
 

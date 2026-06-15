@@ -1,3 +1,5 @@
+'use client';
+import { motion } from 'framer-motion';
 import { ContactForm } from '@/components/forms/ContactForm';
 import { BASE_URL } from '@/lib/secret';
 
@@ -6,7 +8,12 @@ export default function ContactSection() {
     <section className="py-24" id="contact">
       <div className="container">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 max-w-6xl mx-auto items-center">
-          <div>
+          <motion.div
+            initial={{ opacity: 0, x: -30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, margin: "-50px" }}
+            transition={{ duration: 0.6 }}
+          >
             <div className="badge badge-primary mb-4">Get in touch</div>
             <h2 className="text-[clamp(1.75rem,4vw,2.75rem)] font-extrabold tracking-tight leading-[1.15] text-left text-text">
               Have questions? <br/><span className="gradient-text">We'd love to help.</span>
@@ -30,10 +37,15 @@ export default function ContactSection() {
                 </div>
               </div>
             </div>
-          </div>
-          <div>
+          </motion.div>
+          <motion.div
+            initial={{ opacity: 0, x: 30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, margin: "-50px" }}
+            transition={{ duration: 0.6 }}
+          >
             <ContactForm />
-          </div>
+          </motion.div>
         </div>
       </div>
     </section>

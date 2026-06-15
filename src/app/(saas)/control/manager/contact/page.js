@@ -177,7 +177,7 @@ export default function ControlContactPage() {
                         <TiptapEditor
                           value={contactReply}
                           onChange={html => setContactReply(html)}
-                          placeholder="Type your email response…"
+                         
                         />
                         <button
                           onClick={sendContactReply}

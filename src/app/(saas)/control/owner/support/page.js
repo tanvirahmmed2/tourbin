@@ -209,7 +209,7 @@ export default function ControlSupportPage() {
                   <TiptapEditor
                     value={reply}
                     onChange={html => setReply(html)}
-                    placeholder="Type your reply…"
+                   
                   />
                   <button
                     onClick={sendReply}

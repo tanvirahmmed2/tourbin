@@ -47,7 +47,7 @@ export default function ClientDashboardLayout({ session, panelType, children }) 
       {/* Main Content */}
       <main className="flex-1 flex flex-col min-w-0 overflow-hidden bg-slate-50 relative z-0">
         <Navbar onOpenSidebar={() => setIsSidebarOpen(true)} />
-        <div className="flex-1 p-4 md:p-8 overflow-y-auto">
+        <div className="flex-1 p-4 overflow-y-auto">
           {children}
         </div>
       </main>

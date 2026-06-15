@@ -168,7 +168,7 @@ export default function TenantDetailPage({ params }) {
                 type="text"
                 value={editDomain}
                 onChange={(e) => setEditDomain(e.target.value)}
-                placeholder="e.g. www.example.com"
+               
                 className="w-full bg-white border border-slate-200 rounded-lg px-3 py-2 text-sm font-medium text-slate-900 focus:outline-none focus:ring-2 focus:ring-sky-500"
               />
             </div>

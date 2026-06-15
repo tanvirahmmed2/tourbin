@@ -181,7 +181,7 @@ export default function UpgradeWorkspacePage({ params }) {
                       value={trxId} 
                       onChange={(e) => setTrxId(e.target.value)}
                       className="w-full px-4 py-3 bg-white border border-slate-200 rounded-xl focus:ring-2 focus:ring-primary outline-none uppercase font-mono tracking-wider"
-                      placeholder="8N17XXXX"
+                     
                     />
                   </div>
                 )}

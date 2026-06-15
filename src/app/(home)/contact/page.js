@@ -130,7 +130,7 @@ export default function ContactPage() {
                     required
                     value={formData.name}
                     onChange={handleChange}
-                    placeholder="...."
+                   
                   />
                 </div>
 
@@ -144,7 +144,7 @@ export default function ContactPage() {
                       required
                       value={formData.email}
                       onChange={handleChange}
-                      placeholder="....@mail.com"
+                     
                     />
                   </div>
 
@@ -156,7 +156,7 @@ export default function ContactPage() {
                       className="input-custom"
                       value={formData.phone}
                       onChange={handleChange}
-                      placeholder="+880 18 000 000"
+                     
                     />
                   </div>
                 </div>
@@ -170,7 +170,7 @@ export default function ContactPage() {
                     required
                     value={formData.message}
                     onChange={handleChange}
-                    placeholder="Describe how we can help your tour agency..."
+                   
                     style={{ resize: 'vertical' }}
                   />
                 </div>

@@ -88,7 +88,7 @@ export default function ManagerReviewsPage() {
                     value={replyText} 
                     onChange={e => setReplyText(e.target.value)}
                     className="input-custom min-h-[100px]"
-                    placeholder="Write a public reply..."
+                   
                   />
                   <div className="flex gap-2">
                     <button onClick={() => submitReply(r.review_id)} className="btn-custom-primary px-4 py-2 text-sm">Save Reply</button>

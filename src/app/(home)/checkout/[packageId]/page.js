@@ -158,7 +158,7 @@ export default function CheckoutPage({ params }) {
                   onChange={handleChange} 
                   required 
                   className="w-full px-4 py-3 bg-slate-50 border border-border rounded-xl focus:ring-2 focus:ring-primary outline-none transition-all"
-                  placeholder="e.g. My Tour Company"
+                 
                 />
               </div>
 
@@ -172,7 +172,7 @@ export default function CheckoutPage({ params }) {
                     onChange={handleChange} 
                     required 
                     className="w-full px-4 py-3 bg-white border border-border rounded-xl focus:ring-2 focus:ring-primary outline-none transition-all"
-                    placeholder="e.g. www.mytourcompany.com"
+                   
                   />
                 </div>
                 <div>
@@ -209,7 +209,7 @@ export default function CheckoutPage({ params }) {
                     onChange={handleChange} 
                     required 
                     className="w-full px-4 py-3 bg-white border border-border rounded-xl focus:ring-2 focus:ring-primary outline-none transition-all font-mono uppercase tracking-wider"
-                    placeholder="8N17XXXX"
+                   
                   />
                 </div>
               </div>

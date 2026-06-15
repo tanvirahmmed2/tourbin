@@ -12,9 +12,8 @@ const NAV_LINKS = [
   { href: 'https://tourbin-demo.disibin.com/', label: 'Demo' },
 ];
 
-export default function Navbar({ session }) {
+export default function Navbar({ session, onOpenSidebar }) {
   const pathname = usePathname();
-  const [menuOpen, setMenuOpen] = useState(false);
   const [profileOpen, setProfileOpen] = useState(false);
   const profileRef = useRef(null);
 
@@ -101,63 +100,14 @@ export default function Navbar({ session }) {
         {/* Mobile hamburger */}
         <button
           className="md:hidden flex flex-col justify-center gap-[6px] w-8 h-8 bg-transparent border-none cursor-pointer z-50 relative"
-          onClick={() => setMenuOpen(!menuOpen)}
-          aria-label="Toggle menu"
+          onClick={onOpenSidebar}
+          aria-label="Open menu"
         >
-          <span className={`w-6 h-[2px] bg-text transition-all duration-300 origin-center ${menuOpen ? 'rotate-45 translate-y-[8px]' : ''}`} />
-          <span className={`w-6 h-[2px] bg-text transition-all duration-300 ${menuOpen ? 'opacity-0' : ''}`} />
-          <span className={`w-6 h-[2px] bg-text transition-all duration-300 origin-center ${menuOpen ? '-rotate-45 -translate-y-[8px]' : ''}`} />
+          <span className="w-6 h-[2px] bg-text transition-all duration-300 origin-center" />
+          <span className="w-6 h-[2px] bg-text transition-all duration-300" />
+          <span className="w-6 h-[2px] bg-text transition-all duration-300 origin-center" />
         </button>
       </div>
-
-      {menuOpen && (
-        <div className="absolute top-full left-0 right-0 bg-white/95 backdrop-blur-xl border-b border-slate-200/80 py-6 shadow-xl flex flex-col md:hidden">
-          <div className="container flex flex-col gap-4">
-            {NAV_LINKS.map((link) => {
-              const isActive = pathname === link.href;
-              return (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  className={`block py-2 text-base font-semibold border-b border-slate-200/40 ${isActive ? 'text-primary' : 'text-text-2 hover:text-text'}`}
-                  onClick={() => setMenuOpen(false)}
-                >
-                  {link.label}
-                </Link>
-              );
-            })}
-            <div className="flex flex-col gap-3 pt-4">
-              {session ? (
-                <>
-                  <Link href={session.tenant_id ? '/' : '/dashboard'} className="btn-custom-primary text-center w-full" onClick={() => setMenuOpen(false)}>
-                    Dashboard
-                  </Link>
-                  <Link href="/dashboard/profile" className="btn-custom-secondary text-center w-full" onClick={() => setMenuOpen(false)}>
-                    Profile Settings
-                  </Link>
-                  {['owner', 'manager', 'support'].includes(session.role) && !session.tenant_id && (
-                    <Link href={`/control/${session.role}`} className="btn-custom-secondary text-center w-full" onClick={() => setMenuOpen(false)}>
-                      Control Panel
-                    </Link>
-                  )}
-                  <button onClick={() => { handleLogout(); setMenuOpen(false); }} className="w-full py-2.5 rounded-xl bg-danger/5 border border-danger/15 text-danger font-bold text-sm hover:bg-danger/10 transition-all text-center">
-                    Sign Out
-                  </button>
-                </>
-              ) : (
-                <>
-                  <Link href="/login" className="btn-custom-secondary text-center w-full" onClick={() => setMenuOpen(false)}>
-                    Sign In
-                  </Link>
-                  <Link href="/register" className="btn-custom-primary text-center w-full" onClick={() => setMenuOpen(false)}>
-                    Register
-                  </Link>
-                </>
-              )}
-            </div>
-          </div>
-        </div>
-      )}
     </header>
   );
 }
