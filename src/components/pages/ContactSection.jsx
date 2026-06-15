@@ -1,4 +1,4 @@
-import { ContactForm } from '@/components/marketing/ContactForm';
+import { ContactForm } from '@/components/forms/ContactForm';
 import { BASE_URL } from '@/lib/secret';
 
 export default function ContactSection() {
@@ -19,7 +19,7 @@ export default function ContactSection() {
                 <div className="w-12 h-12 bg-primary/10 text-primary rounded-full flex items-center justify-center text-xl">📧</div>
                 <div>
                   <div className="font-bold text-text">Email us</div>
-                  <div className="text-text-2 text-sm">{`support@${BASE_URL.split(':')[0]}`}</div>
+                  <div className="text-text-2 text-sm">support@disibin.com</div>
                 </div>
               </div>
               <div className="flex items-center gap-4">

@@ -26,24 +26,24 @@ export default async function BillingPage() {
   return (
     <div className="max-w-5xl mx-auto space-y-8">
       <div>
-        <h1 className="text-2xl font-extrabold text-text">Billing & Subscriptions</h1>
-        <p className="text-text-3 text-sm mt-1">View your payment history and active plans</p>
+        <h1 className="text-2xl font-extrabold text-slate-900">Billing & Subscriptions</h1>
+        <p className="text-slate-500 text-sm mt-1">View your payment history and active plans</p>
       </div>
 
-      <div className="bg-white border border-border rounded-2xl shadow-sm overflow-hidden">
-        <div className="p-6 border-b border-border">
-          <h2 className="text-lg font-bold text-text">Payment History</h2>
+      <div className="bg-white border border-slate-200 rounded-2xl shadow-sm overflow-hidden">
+        <div className="p-6 border-b border-slate-200">
+          <h2 className="text-lg font-bold text-slate-900">Payment History</h2>
         </div>
         
         {payments.length === 0 ? (
-          <div className="p-12 text-center text-text-3 font-medium">
+          <div className="p-12 text-center text-slate-500 font-medium">
             No payment history found.
           </div>
         ) : (
           <div className="overflow-x-auto">
             <table className="w-full text-left border-collapse">
               <thead>
-                <tr className="bg-slate-50/50 text-[10px] uppercase tracking-wider text-text-3 font-bold">
+                <tr className="bg-slate-50/50 text-[10px] uppercase tracking-wider text-slate-500 font-bold">
                   <th className="p-4 border-b border-slate-100">Date</th>
                   <th className="p-4 border-b border-slate-100">Workspace</th>
                   <th className="p-4 border-b border-slate-100">Plan</th>
@@ -51,24 +51,24 @@ export default async function BillingPage() {
                   <th className="p-4 border-b border-slate-100">Status</th>
                 </tr>
               </thead>
-              <tbody className="text-sm font-medium text-text-2">
+              <tbody className="text-sm font-medium text-slate-600">
                 {payments.map(payment => (
                   <tr key={payment.payment_id} className="hover:bg-slate-50/30 transition-colors">
                     <td className="p-4 border-b border-slate-50">
                       {new Date(payment.created_at).toLocaleDateString()}
                     </td>
-                    <td className="p-4 border-b border-slate-50 text-text font-bold">
+                    <td className="p-4 border-b border-slate-50 text-slate-900 font-bold">
                       {payment.tenant_name}
                     </td>
                     <td className="p-4 border-b border-slate-50">
                       {payment.package_name}
                     </td>
                     <td className="p-4 border-b border-slate-50 font-bold">
-                      ${parseFloat(payment.amount).toFixed(2)}
+                      ৳{parseFloat(payment.amount).toFixed(2)}
                     </td>
                     <td className="p-4 border-b border-slate-50">
                       <span className={`inline-flex items-center px-2 py-0.5 rounded text-[11px] font-bold uppercase tracking-wider
-                        ${payment.status === 'paid' || payment.status === 'success' ? 'bg-green-100 text-green-700' : 
+                        ${payment.status === 'paid' || payment.status === 'success' ? 'bg-emerald-100 text-emerald-700' : 
                           payment.status === 'pending' ? 'bg-amber-100 text-amber-700' : 'bg-red-100 text-red-700'}`}>
                         {payment.status}
                       </span>

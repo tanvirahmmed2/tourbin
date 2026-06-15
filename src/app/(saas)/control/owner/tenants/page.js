@@ -59,7 +59,7 @@ export default function TenantsPage() {
               <thead className="bg-white/5 border-b border-border">
                 <tr>
                   <th className="px-6 py-4 font-bold text-text-2">Organisation</th>
-                  <th className="px-6 py-4 font-bold text-text-2">Subdomain</th>
+                  <th className="px-6 py-4 font-bold text-text-2">Workspace URL</th>
                   <th className="px-6 py-4 font-bold text-text-2">Plan</th>
                   <th className="px-6 py-4 font-bold text-text-2">Users</th>
                   <th className="px-6 py-4 font-bold text-text-2">Status</th>

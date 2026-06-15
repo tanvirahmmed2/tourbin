@@ -53,13 +53,13 @@ export default function LoginPage() {
   return (
     <div className="w-full">
       <div className="text-center mb-8">
-        <h1 className="text-2xl font-bold text-text mb-2">Welcome Back</h1>
-        <p className="text-text-2 text-sm">Sign in to your account to continue</p>
+        <h1 className="text-2xl font-bold text-slate-900 mb-2">Welcome Back</h1>
+        <p className="text-slate-500 text-sm">Sign in to your account to continue</p>
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
-          <label className="block text-sm font-medium text-text-2 mb-1.5" htmlFor="email">
+          <label className="block text-sm font-medium text-slate-600 mb-1.5" htmlFor="email">
             Email Address
           </label>
           <input
@@ -68,14 +68,14 @@ export default function LoginPage() {
             required
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="w-full px-4 py-3 bg-bg border border-border rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all text-text"
+            className="input-custom"
             placeholder="you@example.com"
           />
         </div>
 
         <div>
           <div className="flex items-center justify-between mb-1.5">
-            <label className="block text-sm font-medium text-text-2" htmlFor="password">
+            <label className="block text-sm font-medium text-slate-600" htmlFor="password">
               Password
             </label>
             <Link href="/forgot-password" className="text-xs text-primary hover:underline">
@@ -88,7 +88,7 @@ export default function LoginPage() {
             required
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="w-full px-4 py-3 bg-bg border border-border rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all text-text"
+            className="input-custom"
             placeholder="••••••••"
           />
         </div>
@@ -96,13 +96,13 @@ export default function LoginPage() {
         <button
           type="submit"
           disabled={isLoading}
-          className="w-full py-3 px-4 bg-primary text-white font-medium rounded-xl hover:opacity-90 focus:ring-2 focus:ring-offset-2 focus:ring-primary transition-all disabled:opacity-50 disabled:cursor-not-allowed mt-2"
+          className="btn-custom-primary w-full mt-2"
         >
           {isLoading ? 'Signing in...' : 'Sign In'}
         </button>
       </form>
 
-      <p className="text-center text-sm text-text-2 mt-8">
+      <p className="text-center text-sm text-slate-500 mt-8">
         Don't have an account?{' '}
         <Link href="/register" className="text-primary hover:underline font-medium">
           Create an account

@@ -49,10 +49,10 @@ export default function PackagesPage() {
     <div>
       <div className="flex items-start justify-between mb-8">
         <div>
-          <h1 className="text-3xl font-extrabold text-text tracking-tight">Packages</h1>
-          <p className="text-sm text-text-2 mt-1">Manage SaaS subscription plans</p>
+          <h1 className="text-3xl font-extrabold text-slate-900 tracking-tight">Packages</h1>
+          <p className="text-sm text-slate-600 mt-1">Manage SaaS subscription plans</p>
         </div>
-        <Link href="/control/manager/packages/new" className="px-4 py-2 bg-primary text-white text-sm font-bold rounded-xl hover:opacity-90 transition-all shadow-sm">
+        <Link href="/control/manager/packages/new" className="btn-custom-primary px-4 py-2 text-sm">
           + Add Package
         </Link>
       </div>
@@ -68,40 +68,43 @@ export default function PackagesPage() {
             })();
 
             return (
-              <div key={pkg.package_id} className="bg-white/5 border border-primary/20 rounded-2xl p-7 flex flex-col gap-5 transition-all hover:bg-primary/10 hover:-translate-y-0.5">
+              <div key={pkg.package_id} className="bg-white border border-slate-200 rounded-2xl p-7 flex flex-col gap-5 transition-all hover:border-sky-200 shadow-sm hover:shadow-md hover:-translate-y-0.5">
                 <div className="flex justify-between items-start">
-                  <h3 className="font-bold text-lg text-text">{pkg.name}</h3>
-                  <span className="px-2.5 py-1 bg-primary/10 text-primary text-xs font-bold rounded-lg">{pkg.subscriber_count || 0} tenants</span>
+                  <h3 className="font-extrabold text-lg text-slate-900">{pkg.name}</h3>
+                  <span className="px-2.5 py-1 bg-sky-50 text-sky-700 border border-sky-100 text-xs font-bold rounded-lg">{pkg.subscriber_count || 0} tenants</span>
                 </div>
-                <p className="text-sm text-text-2 min-h-[40px] leading-relaxed">{pkg.description}</p>
-                <div className="grid grid-cols-3 gap-4 bg-white/5 p-4 rounded-xl border border-border">
+                <div 
+                  className="text-sm text-slate-600 min-h-[40px] leading-relaxed font-medium prose prose-sm max-w-none"
+                  dangerouslySetInnerHTML={{ __html: pkg.description }}
+                />
+                <div className="grid grid-cols-3 gap-4 bg-slate-50 p-4 rounded-xl border border-slate-100">
                   <div>
-                    <div className="text-[0.65rem] font-bold text-text-3 uppercase tracking-wider mb-1">Monthly</div>
-                    <div className="text-lg font-extrabold text-text">${Number(pkg.monthly_price).toFixed(0)}</div>
+                    <div className="text-[0.65rem] font-bold text-slate-500 uppercase tracking-wider mb-1">Monthly</div>
+                    <div className="text-lg font-extrabold text-slate-900">৳{Number(pkg.monthly_price).toFixed(0)}</div>
                   </div>
                   <div>
-                    <div className="text-[0.65rem] font-bold text-text-3 uppercase tracking-wider mb-1">Yearly</div>
-                    <div className="text-lg font-extrabold text-success">${Number(pkg.yearly_price).toFixed(0)}</div>
+                    <div className="text-[0.65rem] font-bold text-slate-500 uppercase tracking-wider mb-1">Yearly</div>
+                    <div className="text-lg font-extrabold text-emerald-600">৳{Number(pkg.yearly_price).toFixed(0)}</div>
                   </div>
                   <div>
-                    <div className="text-[0.65rem] font-bold text-text-3 uppercase tracking-wider mb-1">Setup Fee</div>
-                    <div className="text-lg font-extrabold text-primary">${Number(pkg.setup_fee || 0).toFixed(0)}</div>
+                    <div className="text-[0.65rem] font-bold text-slate-500 uppercase tracking-wider mb-1">Setup Fee</div>
+                    <div className="text-lg font-extrabold text-sky-600">৳{Number(pkg.setup_fee || 0).toFixed(0)}</div>
                   </div>
                 </div>
                 {features.length > 0 && (
                   <ul className="list-none flex flex-col gap-2 mt-2">
                     {features.slice(0, 5).map((f, i) => (
-                      <li key={i} className="text-sm font-medium text-text-2 flex gap-3 items-start">
-                        <span className="text-primary shrink-0">✓</span> {f.name || f}
+                      <li key={i} className="text-sm font-medium text-slate-600 flex gap-3 items-start">
+                        <span className="text-sky-600 font-bold shrink-0">✓</span> {f.name || f}
                       </li>
                     ))}
                   </ul>
                 )}
-                <div className="flex gap-3 mt-auto pt-5 border-t border-border">
-                  <Link href={`/control/manager/packages/${pkg.package_id}`} className="px-4 py-2 bg-white/5 border border-border text-text font-semibold text-sm rounded-xl flex-1 text-center hover:bg-white/10 transition-colors">
+                <div className="flex gap-3 mt-auto pt-5 border-t border-slate-100">
+                  <Link href={`/control/manager/packages/${pkg.package_id}`} className="px-4 py-2 bg-white border border-slate-200 text-slate-700 font-semibold text-sm rounded-xl flex-1 text-center hover:bg-slate-50 transition-colors">
                     Edit
                   </Link>
-                  <button onClick={() => handleDelete(pkg.package_id)} className="px-4 py-2 bg-transparent border border-danger/20 text-danger font-semibold text-sm rounded-xl flex-1 text-center hover:bg-danger hover:text-white transition-colors">
+                  <button onClick={() => handleDelete(pkg.package_id)} className="px-4 py-2 bg-white border border-red-200 text-red-600 font-semibold text-sm rounded-xl flex-1 text-center hover:bg-red-50 transition-colors">
                     Delete
                   </button>
                 </div>

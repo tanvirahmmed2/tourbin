@@ -45,7 +45,7 @@ export default function CustomerReviewPage() {
 
   return (
     <div className="max-w-xl mx-auto">
-      <h1 className="text-2xl font-bold mb-2">Rate Your Experience</h1>
+      <h1 className="text-2xl font-extrabold text-slate-900 mb-2">Rate Your Experience</h1>
       <p className="text-slate-500 mb-8">Leave a review for the Tourbin platform. Your feedback helps us improve!</p>
 
       <form onSubmit={handleSubmit} className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm space-y-6">
@@ -83,7 +83,7 @@ export default function CustomerReviewPage() {
             rows={5} 
             value={formData.comment} 
             onChange={e => setFormData({...formData, comment: e.target.value})} 
-            className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-primary/20"
+            className="input-custom"
             placeholder="Tell us what you love or what we could improve..."
           />
         </div>

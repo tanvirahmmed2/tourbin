@@ -1,6 +1,7 @@
 'use client';
 import { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
+import TiptapEditor from '@/components/ui/TiptapEditor';
 
 const STATUS_COLORS = {
   open: 'bg-blue-500/20 text-blue-300 border-blue-500/30',
@@ -84,9 +85,9 @@ export default function ControlSupportPage() {
         </select>
       </div>
 
-      <div className="flex gap-6 h-[calc(100vh-220px)]">
+      <div className="flex flex-col md:flex-row gap-6 h-[calc(100vh-220px)]">
         {/* Ticket list */}
-        <div className="w-[360px] shrink-0 flex flex-col gap-2 overflow-y-auto pr-1">
+        <div className={`w-full md:w-[360px] shrink-0 flex-col gap-2 overflow-y-auto pr-1 ${selected ? 'hidden md:flex' : 'flex'}`}>
           {loading ? (
             <div className="text-text-3 text-sm text-center py-12">Loading…</div>
           ) : tickets.length === 0 ? (
@@ -121,7 +122,7 @@ export default function ControlSupportPage() {
         </div>
 
         {/* Thread panel */}
-        <div className="flex-1 bg-white/3 border border-border rounded-2xl flex flex-col overflow-hidden">
+        <div className={`flex-1 bg-white/3 border border-border rounded-2xl flex-col overflow-hidden ${!selected ? 'hidden md:flex' : 'flex'}`}>
           {!selected ? (
             <div className="flex-1 flex flex-col items-center justify-center text-text-3">
               <div className="text-6xl mb-4 opacity-30">💬</div>
@@ -133,11 +134,14 @@ export default function ControlSupportPage() {
             <>
               {/* Thread header */}
               <div className="p-5 border-b border-border flex items-start justify-between gap-4">
-                <div>
-                  <h2 className="text-lg font-bold text-text mb-0.5">{thread.ticket.subject}</h2>
-                  <div className="text-xs text-text-3">
-                    <span className="text-[#c4b5fd] font-medium">{thread.ticket.tenant_name}</span>
-                    {' · '}{new Date(thread.ticket.created_at).toLocaleString()}
+                <div className="flex items-start gap-3">
+                  <button onClick={() => setSelected(null)} className="md:hidden text-text-3 hover:text-text-2 mt-1">←</button>
+                  <div>
+                    <h2 className="text-lg font-bold text-text mb-0.5">{thread.ticket.subject}</h2>
+                    <div className="text-xs text-text-3">
+                      <span className="text-[#c4b5fd] font-medium">{thread.ticket.tenant_name}</span>
+                      {' · '}{new Date(thread.ticket.created_at).toLocaleString()}
+                    </div>
                   </div>
                 </div>
                 <div className="flex items-center gap-2 shrink-0">
@@ -167,7 +171,10 @@ export default function ControlSupportPage() {
                       <span className="text-sm font-semibold text-text">{thread.ticket.tenant_name}</span>
                       <span className="text-xs text-text-3">· Original</span>
                     </div>
-                    <div className="bg-white/4 border border-border rounded-xl p-3 text-sm text-text-2 whitespace-pre-wrap">{thread.ticket.message}</div>
+                    <div 
+                      className="bg-white/4 border border-border rounded-xl p-3 text-sm text-text-2 leading-relaxed"
+                      dangerouslySetInnerHTML={{ __html: thread.ticket.message }}
+                    />
                   </div>
                 </div>
 
@@ -183,13 +190,14 @@ export default function ControlSupportPage() {
                         <span className="text-sm font-semibold text-text">{r.is_admin ? 'SaaS Admin' : (r.user_name || 'Tenant')}</span>
                         <span className="text-xs text-text-3">{new Date(r.created_at).toLocaleString()}</span>
                       </div>
-                      <div className={`max-w-[85%] rounded-xl p-3 text-sm whitespace-pre-wrap ${
-                        r.is_admin
-                          ? 'bg-[#8b5cf6]/15 border border-[#8b5cf6]/25 text-[#e9d5ff] self-end'
-                          : 'bg-white/4 border border-border text-text-2'
-                      }`}>
-                        {r.message}
-                      </div>
+                      <div 
+                        className={`max-w-[85%] rounded-xl p-3 text-sm leading-relaxed ${
+                          r.is_admin
+                            ? 'bg-[#8b5cf6]/15 border border-[#8b5cf6]/25 text-[#e9d5ff] self-end'
+                            : 'bg-white/4 border border-border text-text-2'
+                        }`}
+                        dangerouslySetInnerHTML={{ __html: r.message }}
+                      />
                     </div>
                   </div>
                 ))}
@@ -197,17 +205,15 @@ export default function ControlSupportPage() {
 
               {/* Reply box */}
               {thread.ticket.status !== 'closed' && (
-                <div className="p-4 border-t border-border flex gap-3">
-                  <textarea
+                <div className="p-4 border-t border-border flex flex-col gap-3">
+                  <TiptapEditor
                     value={reply}
-                    onChange={e => setReply(e.target.value)}
+                    onChange={html => setReply(html)}
                     placeholder="Type your reply…"
-                    rows={2}
-                    className="flex-1 bg-white/5 border border-border rounded-xl px-4 py-2.5 text-sm text-text placeholder-text-3 resize-none focus:outline-none focus:border-[#8b5cf6]/50"
                   />
                   <button
                     onClick={sendReply}
-                    disabled={sending || !reply.trim()}
+                    disabled={sending || !reply.replace(/<[^>]*>?/gm, '').trim()}
                     className="px-5 py-2 rounded-xl bg-[#8b5cf6] text-white font-semibold text-sm hover:bg-[#7c3aed] transition disabled:opacity-40 disabled:cursor-not-allowed self-end"
                   >
                     {sending ? '…' : 'Reply'}

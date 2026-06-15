@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { TrustStats } from '@/components/marketing/TrustStats';
+import { TrustStats } from '@/components/card/TrustStats';
 
 export const metadata = {
   title: 'Our Mission & Story — Tourbin',
@@ -48,7 +48,6 @@ export default function AboutPage() {
                 Tourbin changes all of this by acting as your digital operations manager. We automate the booking engine, verify payments instantly, organize customer CRM logs, and build beautiful public booking websites automatically.
               </p>
               <div className="flex gap-4 mt-6">
-                <Link href="/register" className="px-5 py-2.5 rounded-xl bg-primary text-white font-bold text-sm hover:bg-primary-dark transition-all duration-300">Start Trial</Link>
                 <Link href="/contact" className="px-5 py-2.5 rounded-xl bg-white border border-slate-200 text-text-2 font-bold text-sm hover:bg-slate-5 transition-all duration-300">Contact Us</Link>
               </div>
             </div>

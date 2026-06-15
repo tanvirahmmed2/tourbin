@@ -4,6 +4,7 @@ import axios from 'axios';
 import { useRouter, useParams } from 'next/navigation';
 import Link from 'next/link';
 import { LoadingSpinner, ErrorMessage } from '@/components/dashboard/ui';
+import TiptapEditor from '@/components/ui/TiptapEditor';
 
 export default function EditPackagePage() {
   const router = useRouter();
@@ -90,83 +91,86 @@ export default function EditPackagePage() {
   return (
     <div className="max-w-3xl mx-auto">
       <div className="flex items-center gap-4 mb-8">
-        <Link href="/control/manager/packages" className="px-4 py-2 text-sm font-bold text-text-2 bg-white/5 border border-border rounded-xl hover:bg-white/10 transition-colors">
+        <Link href="/control/manager/packages" className="px-4 py-2 text-sm font-bold text-slate-600 bg-white border border-slate-200 rounded-xl hover:bg-slate-50 transition-colors shadow-sm">
           ← Back
         </Link>
-        <h1 className="text-2xl font-extrabold text-text">Edit Package</h1>
+        <h1 className="text-2xl font-extrabold text-slate-900">Edit Package</h1>
       </div>
 
-      <form onSubmit={handleSubmit} className="bg-white/5 border border-border rounded-2xl p-8 flex flex-col gap-6">
+      <form onSubmit={handleSubmit} className="bg-white border border-slate-200 shadow-sm rounded-2xl p-8 flex flex-col gap-6">
         <div className="grid grid-cols-1 gap-6">
           <div>
-            <label className="block text-sm font-medium text-text-2 mb-1.5">Name</label>
-            <input type="text" name="name" value={formData.name} onChange={handleChange} required className="w-full px-4 py-3 bg-bg border border-border rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all text-text" />
+            <label className="block text-sm font-semibold text-slate-700 mb-1.5">Name</label>
+            <input type="text" name="name" value={formData.name} onChange={handleChange} required className="input-custom" />
           </div>
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-text-2 mb-1.5">Description</label>
-          <textarea name="description" value={formData.description} onChange={handleChange} className="w-full px-4 py-3 bg-bg border border-border rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all text-text" rows="3"></textarea>
+          <label className="block text-sm font-semibold text-slate-700 mb-1.5">Description</label>
+          <TiptapEditor
+            value={formData.description}
+            onChange={(html) => setFormData(prev => ({ ...prev, description: html }))}
+          />
         </div>
 
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
-            <label className="block text-sm font-medium text-text-2 mb-1.5">Monthly Price ($)</label>
-            <input type="number" name="monthly_price" value={formData.monthly_price} onChange={handleChange} className="w-full px-4 py-3 bg-bg border border-border rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all text-text" />
+            <label className="block text-sm font-semibold text-slate-700 mb-1.5">Monthly Price ($)</label>
+            <input type="number" name="monthly_price" value={formData.monthly_price} onChange={handleChange} className="input-custom" />
           </div>
           <div>
-            <label className="block text-sm font-medium text-text-2 mb-1.5">One-time Setup Fee ($)</label>
-            <input type="number" name="setup_fee" value={formData.setup_fee} onChange={handleChange} className="w-full px-4 py-3 bg-bg border border-border rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all text-text" />
+            <label className="block text-sm font-semibold text-slate-700 mb-1.5">One-time Setup Fee ($)</label>
+            <input type="number" name="setup_fee" value={formData.setup_fee} onChange={handleChange} className="input-custom" />
           </div>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div>
-            <label className="block text-sm font-medium text-text-2 mb-1.5">Max Tours</label>
-            <input type="number" name="max_tours" value={formData.max_tours} onChange={handleChange} className="w-full px-4 py-3 bg-bg border border-border rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all text-text" />
+            <label className="block text-sm font-semibold text-slate-700 mb-1.5">Max Tours</label>
+            <input type="number" name="max_tours" value={formData.max_tours} onChange={handleChange} className="input-custom" />
           </div>
           <div>
-            <label className="block text-sm font-medium text-text-2 mb-1.5">Max Bookings/mo</label>
-            <input type="number" name="max_bookings_per_month" value={formData.max_bookings_per_month} onChange={handleChange} className="w-full px-4 py-3 bg-bg border border-border rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all text-text" />
+            <label className="block text-sm font-semibold text-slate-700 mb-1.5">Max Bookings/mo</label>
+            <input type="number" name="max_bookings_per_month" value={formData.max_bookings_per_month} onChange={handleChange} className="input-custom" />
           </div>
           <div>
-            <label className="block text-sm font-medium text-text-2 mb-1.5">Max Staff</label>
-            <input type="number" name="max_staff" value={formData.max_staff} onChange={handleChange} className="w-full px-4 py-3 bg-bg border border-border rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all text-text" />
+            <label className="block text-sm font-semibold text-slate-700 mb-1.5">Max Staff</label>
+            <input type="number" name="max_staff" value={formData.max_staff} onChange={handleChange} className="input-custom" />
           </div>
         </div>
 
         <div>
           <div className="flex items-center justify-between mb-3">
-            <label className="block text-sm font-medium text-text-2">Key Features (Included in plan)</label>
-            <Link href="/control/manager/features" className="text-sm font-bold text-primary hover:underline">Manage Features</Link>
+            <label className="block text-sm font-semibold text-slate-700">Key Features (Included in plan)</label>
+            <Link href="/control/manager/features" className="text-sm font-bold text-sky-600 hover:underline">Manage Features</Link>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
             {availableFeatures.map(f => (
-              <label key={f.feature_id} className="flex items-start gap-3 p-3 bg-white/5 border border-border rounded-xl cursor-pointer hover:bg-white/10 transition-colors group">
+              <label key={f.feature_id} className="flex items-start gap-3 p-3 bg-white border border-slate-200 rounded-xl cursor-pointer hover:border-sky-200 hover:shadow-sm transition-all group">
                 <input 
                   type="checkbox" 
                   checked={formData.features.includes(f.feature_id)} 
                   onChange={() => handleFeatureToggle(f.feature_id)}
-                  className="mt-0.5 w-4 h-4 rounded border-border text-primary focus:ring-primary focus:ring-offset-2 transition-all accent-primary" 
+                  className="mt-0.5 w-4 h-4 rounded border-slate-300 text-sky-600 focus:ring-sky-500 focus:ring-offset-2 transition-all accent-sky-600 cursor-pointer" 
                 />
-                <span className="text-sm font-semibold text-text group-hover:text-text-1 transition-colors leading-tight">{f.name}</span>
+                <span className="text-sm font-semibold text-slate-700 group-hover:text-slate-900 transition-colors leading-tight">{f.name}</span>
               </label>
             ))}
           </div>
         </div>
 
-        <div className="flex flex-wrap gap-8 mt-2 bg-white/5 p-6 rounded-xl border border-border">
+        <div className="flex flex-wrap gap-8 mt-2 bg-slate-50 p-6 rounded-xl border border-slate-200">
           <label className="flex items-center gap-3 cursor-pointer group">
             <div className="relative flex items-center">
-              <input type="checkbox" name="is_active" checked={formData.is_active} onChange={handleChange} className="w-5 h-5 rounded border-border text-primary focus:ring-primary focus:ring-offset-2 transition-all cursor-pointer accent-primary" />
+              <input type="checkbox" name="is_active" checked={formData.is_active} onChange={handleChange} className="w-5 h-5 rounded border-slate-300 text-sky-600 focus:ring-sky-500 focus:ring-offset-2 transition-all cursor-pointer accent-sky-600" />
             </div>
-            <span className="text-sm font-bold text-text-2 group-hover:text-text transition-colors">Is Active</span>
+            <span className="text-sm font-bold text-slate-700 group-hover:text-slate-900 transition-colors">Is Active</span>
           </label>
         </div>
 
-        <div className="mt-4 pt-6 border-t border-border">
-          <button type="submit" disabled={saving} className="w-full py-3.5 px-4 bg-primary text-white font-bold rounded-xl hover:opacity-90 focus:ring-2 focus:ring-offset-2 focus:ring-primary transition-all disabled:opacity-50 disabled:cursor-not-allowed">
+        <div className="mt-4 pt-6 border-t border-slate-200">
+          <button type="submit" disabled={saving} className="btn-custom-primary w-full py-3.5 text-base shadow-sm">
             {saving ? 'Saving Changes...' : 'Save Changes'}
           </button>
         </div>

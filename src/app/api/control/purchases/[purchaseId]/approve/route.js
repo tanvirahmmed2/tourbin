@@ -86,7 +86,7 @@ export async function POST(request, { params }) {
     const tenantAdminEmail = purchase.metadata?.tenantAdminEmail;
 
     if (!requestedTenantSlug) {
-      return NextResponse.json({ success: false, message: 'Invalid purchase details (missing subdomain).' }, { status: 400 });
+      return NextResponse.json({ success: false, message: 'Invalid purchase details (missing workspace slug).' }, { status: 400 });
     }
 
     // Double check if slug is still available

@@ -76,7 +76,7 @@ export default function SubscriptionsPage() {
                       <td>
                         <span className="badge badge-primary text-[0.7rem]">{s.billing_cycle}</span>
                       </td>
-                      <td className="font-bold">${price.toFixed(2)}</td>
+                      <td className="font-bold">৳{price.toFixed(2)}</td>
                       <td className="text-xs text-text-3">
                         {s.current_period_end ? new Date(s.current_period_end).toLocaleDateString() : '—'}
                       </td>

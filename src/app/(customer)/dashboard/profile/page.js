@@ -42,22 +42,22 @@ export default function CustomerProfilePage() {
 
   return (
     <div className="max-w-lg mx-auto">
-      <h1 className="text-2xl font-bold mb-8">My Profile</h1>
+      <h1 className="text-2xl font-extrabold text-slate-900 mb-8">My Profile</h1>
 
       <form onSubmit={handleSubmit} className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm space-y-6">
         <div>
           <label className="block text-xs font-bold text-slate-500 uppercase mb-2">Full Name</label>
-          <input required type="text" value={formData.name} onChange={e => setFormData({...formData, name: e.target.value})} className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-primary/20" />
+          <input required type="text" value={formData.name} onChange={e => setFormData({...formData, name: e.target.value})} className="input-custom" />
         </div>
         
         <div>
           <label className="block text-xs font-bold text-slate-500 uppercase mb-2">Email Address</label>
-          <input required type="email" value={formData.email} onChange={e => setFormData({...formData, email: e.target.value})} className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-primary/20" />
+          <input required type="email" value={formData.email} onChange={e => setFormData({...formData, email: e.target.value})} className="input-custom" />
         </div>
 
         <div>
           <label className="block text-xs font-bold text-slate-500 uppercase mb-2">New Password (Optional)</label>
-          <input type="password" placeholder="Leave blank to keep current" value={formData.password} onChange={e => setFormData({...formData, password: e.target.value})} className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-primary/20" />
+          <input type="password" placeholder="Leave blank to keep current" value={formData.password} onChange={e => setFormData({...formData, password: e.target.value})} className="input-custom" />
         </div>
 
         <button disabled={saving} type="submit" className="w-full btn-custom-primary mt-2">

@@ -44,16 +44,16 @@ function VerifyContent() {
 
   return (
     <div className="text-center">
-      <h2 className="text-xl font-bold mb-4">Account Verification</h2>
+      <h2 className="text-2xl font-bold mb-4 text-slate-900">Account Verification</h2>
       
       {status === 'loading' && (
-        <p className="text-text-2 text-sm mb-6 animate-pulse">{message}</p>
+        <p className="text-slate-500 text-sm mb-6 animate-pulse">{message}</p>
       )}
 
       {status === 'success' && (
         <>
-          <p className="text-green-600 font-medium text-sm mb-6">{message}</p>
-          <Link href="/login" className="px-5 py-2.5 rounded-xl bg-primary text-white font-bold text-sm hover:bg-primary-dark transition w-full inline-block">
+          <p className="text-emerald-600 font-medium text-sm mb-6">{message}</p>
+          <Link href="/login" className="btn-custom-primary w-full inline-block text-center">
             Go to Login
           </Link>
         </>
@@ -62,7 +62,7 @@ function VerifyContent() {
       {status === 'error' && (
         <>
           <p className="text-red-500 font-medium text-sm mb-6">{message}</p>
-          <Link href="/login" className="px-5 py-2.5 rounded-xl bg-bg border border-border text-text font-bold text-sm transition w-full inline-block">
+          <Link href="/login" className="btn-custom-secondary w-full inline-block text-center">
             Return to Login
           </Link>
         </>
@@ -73,7 +73,7 @@ function VerifyContent() {
 
 export default function VerifyPage() {
   return (
-    <Suspense fallback={<div className="text-center text-sm text-text-2">Loading...</div>}>
+    <Suspense fallback={<div className="text-center text-sm text-slate-500">Loading...</div>}>
       <VerifyContent />
     </Suspense>
   );

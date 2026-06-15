@@ -45,17 +45,17 @@ export default function CustomerDashboardPage() {
   return (
     <div className="max-w-5xl mx-auto space-y-8">
       <div>
-        <h1 className="text-2xl font-extrabold text-text">My Workspaces</h1>
-        <p className="text-text-3 text-sm mt-1">Manage your active tour businesses</p>
+        <h1 className="text-2xl font-extrabold text-slate-900">My Workspaces</h1>
+        <p className="text-slate-500 text-sm mt-1">Manage your active tour businesses</p>
       </div>
 
       {workspaces.length === 0 ? (
-        <div className="bg-white border border-border rounded-2xl p-12 text-center shadow-sm">
-          <div className="w-16 h-16 bg-primary/10 text-primary rounded-full flex items-center justify-center mx-auto mb-4 text-2xl">
+        <div className="bg-white border border-slate-200 rounded-2xl p-12 text-center shadow-sm">
+          <div className="w-16 h-16 bg-sky-50 text-sky-600 rounded-full flex items-center justify-center mx-auto mb-4 text-2xl">
             🏢
           </div>
-          <h2 className="text-lg font-bold text-text mb-2">No Workspaces Found</h2>
-          <p className="text-text-2 mb-6 max-w-md mx-auto">
+          <h2 className="text-lg font-bold text-slate-900 mb-2">No Workspaces Found</h2>
+          <p className="text-slate-600 mb-6 max-w-md mx-auto">
             You haven't created any workspaces yet. Purchase a subscription plan to get started.
           </p>
           <Link href="/pricing" className="btn-custom-primary inline-flex items-center gap-2">
@@ -65,11 +65,11 @@ export default function CustomerDashboardPage() {
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {workspaces.map(workspace => (
-            <div key={workspace.tenant_id} className="bg-white border border-border rounded-2xl p-6 shadow-sm flex flex-col hover:border-primary/30 transition-colors">
+            <div key={workspace.tenant_id} className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm flex flex-col hover:border-sky-200 transition-colors">
               <div className="flex items-start justify-between mb-4">
                 <div>
-                  <h3 className="text-lg font-bold text-text">{workspace.tenant_name}</h3>
-                  <p className="text-text-3 text-sm mt-0.5">{workspace.primary_domain}</p>
+                  <h3 className="text-lg font-bold text-slate-900">{workspace.tenant_name}</h3>
+                  <p className="text-slate-500 text-sm mt-0.5">{workspace.primary_domain}</p>
                 </div>
                 <div className="bg-green-50 text-green-700 border border-green-200 text-xs font-bold px-2 py-1 rounded-md uppercase tracking-wider">
                   {workspace.status}
@@ -78,17 +78,17 @@ export default function CustomerDashboardPage() {
               
               <div className="space-y-3 mb-6 bg-slate-50 rounded-xl p-4 border border-slate-100 flex-1">
                 <div className="flex justify-between text-sm">
-                  <span className="text-text-2 font-medium">Plan</span>
-                  <span className="text-text font-bold">{workspace.plan_name || 'No Active Plan'}</span>
+                  <span className="text-slate-600 font-medium">Plan</span>
+                  <span className="text-slate-900 font-bold">{workspace.plan_name || 'No Active Plan'}</span>
                 </div>
                 <div className="flex justify-between text-sm">
-                  <span className="text-text-2 font-medium">Subscription</span>
-                  <span className="text-text font-bold capitalize">{workspace.subscription_status || 'Inactive'}</span>
+                  <span className="text-slate-600 font-medium">Subscription</span>
+                  <span className="text-slate-900 font-bold capitalize">{workspace.subscription_status || 'Inactive'}</span>
                 </div>
                 {workspace.max_tours && (
                   <div className="flex justify-between text-sm pt-2 border-t border-slate-200">
-                    <span className="text-text-2 font-medium">Max Tours</span>
-                    <span className="text-text font-bold">{workspace.max_tours}</span>
+                    <span className="text-slate-600 font-medium">Max Tours</span>
+                    <span className="text-slate-900 font-bold">{workspace.max_tours}</span>
                   </div>
                 )}
               </div>
@@ -96,7 +96,7 @@ export default function CustomerDashboardPage() {
               <div className="flex items-center gap-3 mt-auto pt-4 border-t border-slate-100">
                 <Link 
                   href={`/dashboard/workspaces/${workspace.tenant_id}`}
-                  className="flex-1 px-4 py-2 bg-white border border-border text-text font-semibold text-sm rounded-xl text-center hover:bg-slate-50 transition-colors"
+                  className="flex-1 px-4 py-2 bg-white border border-slate-200 text-slate-900 font-semibold text-sm rounded-xl text-center hover:bg-slate-50 transition-colors"
                 >
                   Manage Settings
                 </Link>

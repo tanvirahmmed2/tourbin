@@ -51,8 +51,8 @@ export default function ControlAnalyticsPage() {
     <div className="w-full">
       <div className="flex items-start justify-between mb-8">
         <div>
-          <h1 className="text-3xl font-extrabold text-text tracking-tight">Platform Analytics</h1>
-          <p className="text-xs text-text-3 mt-1.5 uppercase tracking-wider font-bold font-sans">Metrics overview</p>
+          <h1 className="text-3xl font-extrabold text-slate-900 tracking-tight">Platform Analytics</h1>
+          <p className="text-xs text-slate-500 mt-1.5 uppercase tracking-wider font-bold font-sans">Metrics overview</p>
         </div>
       </div>
 
@@ -60,49 +60,49 @@ export default function ControlAnalyticsPage() {
         {METRICS.map((m) => (
           <div 
             key={m.label} 
-            className="relative bg-white/5 border border-primary/20 rounded-2xl p-6 transition-all duration-300 hover:bg-primary/10 hover:-translate-y-0.5"
+            className="relative bg-white border border-slate-200 rounded-2xl p-6 transition-all duration-300 shadow-sm hover:border-sky-200 hover:shadow-md hover:-translate-y-0.5"
           >
             <div className="flex justify-between items-center gap-4 mb-4">
-              <div className="text-[10px] font-bold uppercase tracking-wider text-text-3">{m.label}</div>
-              <div className="text-xl filter drop-shadow-[0_4px_8px_rgba(99,102,241,0.08)]">{m.icon}</div>
+              <div className="text-[10px] font-bold uppercase tracking-wider text-slate-500">{m.label}</div>
+              <div className="text-xl filter drop-shadow-sm">{m.icon}</div>
             </div>
-            <div className="text-2xl font-black text-text tracking-tight leading-none mb-2">{m.value}</div>
-            {m.sub && <div className="text-[10px] font-bold text-success tracking-wide">{m.sub}</div>}
+            <div className="text-2xl font-extrabold text-slate-900 tracking-tight leading-none mb-2">{m.value}</div>
+            {m.sub && <div className="text-[10px] font-bold text-emerald-600 tracking-wide">{m.sub}</div>}
           </div>
         ))}
       </div>
 
       {/* Tenant Growth */}
-      <div className="bg-white/5 border border-border rounded-3xl overflow-hidden">
-        <div className="p-5 px-6 border-b border-border">
-          <span className="text-base font-bold text-text tracking-tight">Tenant Growth (last 6 months)</span>
+      <div className="bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm">
+        <div className="p-5 px-6 border-b border-slate-100 bg-slate-50/50">
+          <span className="text-base font-bold text-slate-900 tracking-tight">Tenant Growth (last 6 months)</span>
         </div>
         {tenantGrowth.length === 0 ? (
           <EmptyState icon="📊" title="No growth data yet" />
         ) : (
           <div className="overflow-x-auto">
-            <table className="w-full border-collapse table-custom">
-              <thead>
+            <table className="w-full text-left text-sm">
+              <thead className="bg-slate-50 border-b border-slate-200 text-slate-500 uppercase tracking-wider">
                 <tr>
-                  <th>Month</th>
-                  <th>New Tenants</th>
-                  <th className="min-w-[200px]">Visual</th>
+                  <th className="px-6 py-4 font-semibold">Month</th>
+                  <th className="px-6 py-4 font-semibold">New Tenants</th>
+                  <th className="px-6 py-4 font-semibold min-w-[200px]">Visual</th>
                 </tr>
               </thead>
-              <tbody>
+              <tbody className="divide-y divide-slate-100">
                 {tenantGrowth.map((row) => {
                   const pct = (parseInt(row.count) / maxCount) * 100;
                   return (
-                    <tr key={row.month}>
-                      <td className="font-bold text-text text-sm">
+                    <tr key={row.month} className="hover:bg-slate-50/50 transition-colors">
+                      <td className="px-6 py-4 font-bold text-slate-900 text-sm">
                         {new Date(row.month).toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}
                       </td>
-                      <td className="font-black text-text text-sm">{row.count}</td>
-                      <td>
-                        <div className="h-2 bg-white/10 rounded-full overflow-hidden w-full max-w-md">
+                      <td className="px-6 py-4 font-extrabold text-slate-900 text-sm">{row.count}</td>
+                      <td className="px-6 py-4">
+                        <div className="h-2 bg-slate-100 rounded-full overflow-hidden w-full max-w-md">
                           <div
                             className="h-full rounded-full transition-all duration-500"
-                            style={{ width: `${pct}%`, background: 'linear-gradient(90deg, #6366f1, #8b5cf6)' }}
+                            style={{ width: `${pct}%`, background: 'linear-gradient(90deg, #0ea5e9, #38bdf8)' }}
                           />
                         </div>
                       </td>

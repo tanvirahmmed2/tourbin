@@ -1,8 +1,7 @@
 import Link from 'next/link';
 import { isOwner } from '@/lib/middleware';
 import { redirect } from 'next/navigation';
-import Sidebar from '@/components/dashboard/Sidebar';
-import Navbar from '@/components/dashboard/Navbar';
+import ClientDashboardLayout from '@/components/dashboard/ClientDashboardLayout';
 
 export default async function OwnerLayout({ children }) {
   const auth = await isOwner();
@@ -10,14 +9,8 @@ export default async function OwnerLayout({ children }) {
   const session = auth.data;
 
   return (
-    <div className="flex h-screen bg-bg text-text overflow-hidden">
-      <Sidebar session={session} panelType="owner" />
-
-      {/* Main Content */}
-      <main className="flex-1 flex flex-col overflow-hidden bg-bg">
-        <Navbar title="SaaS Control Panel" />
-        <div className="flex-1 p-8 overflow-y-auto">{children}</div>
-      </main>
-    </div>
+    <ClientDashboardLayout session={session} panelType="owner" title="SaaS Control Panel">
+      {children}
+    </ClientDashboardLayout>
   );
 }

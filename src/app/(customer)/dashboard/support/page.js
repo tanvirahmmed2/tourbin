@@ -2,6 +2,7 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { LoadingSpinner } from '@/components/dashboard/ui';
+import TiptapEditor from '@/components/ui/TiptapEditor';
 
 const STATUS_COLORS = {
   open: 'bg-blue-500/10 text-blue-600 border-blue-500/20',
@@ -80,14 +81,14 @@ export default function CustomerSupportPage() {
   if (loading) return <div className="p-8"><LoadingSpinner /></div>;
 
   return (
-    <div className="max-w-6xl mx-auto h-[calc(100vh-140px)] flex gap-6">
+    <div className="max-w-6xl mx-auto h-[calc(100vh-140px)] flex flex-col md:flex-row gap-6">
       {/* Left Sidebar: Ticket List & New Ticket Button */}
-      <div className="w-[380px] shrink-0 flex flex-col gap-4">
+      <div className={`w-full md:w-[380px] shrink-0 flex-col gap-4 ${selected ? 'hidden md:flex' : 'flex'}`}>
         <div className="flex justify-between items-center bg-white border border-slate-200 rounded-2xl p-4 shadow-sm">
-          <h1 className="text-xl font-bold text-slate-800">Support</h1>
+          <h1 className="text-xl font-extrabold text-slate-900">Support</h1>
           <button 
             onClick={() => setSelected('new')}
-            className="px-4 py-2 bg-primary text-white text-sm font-bold rounded-xl hover:bg-primary-dark transition"
+            className="btn-custom-primary px-4 py-2 text-sm"
           >
             + New Ticket
           </button>
@@ -110,7 +111,7 @@ export default function CustomerSupportPage() {
                 }`}
               >
                 <div className="flex items-start justify-between gap-2 mb-2">
-                  <span className="text-sm font-bold text-slate-800 line-clamp-1">{t.subject}</span>
+                  <span className="text-sm font-bold text-slate-900 line-clamp-1">{t.subject}</span>
                   <span className={`shrink-0 text-[10px] font-bold uppercase px-2 py-0.5 rounded-full border ${STATUS_COLORS[t.status]}`}>
                     {t.status.replace('_', ' ')}
                   </span>
@@ -127,7 +128,7 @@ export default function CustomerSupportPage() {
       </div>
 
       {/* Right Panel: Thread View or Create Form */}
-      <div className="flex-1 bg-white border border-slate-200 rounded-2xl flex flex-col overflow-hidden shadow-sm">
+      <div className={`flex-1 bg-white border border-slate-200 rounded-2xl flex-col overflow-hidden shadow-sm ${!selected ? 'hidden md:flex' : 'flex'}`}>
         {!selected ? (
            <div className="flex-1 flex flex-col items-center justify-center text-slate-400">
              <div className="text-5xl mb-4 opacity-50">💬</div>
@@ -135,7 +136,12 @@ export default function CustomerSupportPage() {
            </div>
         ) : selected === 'new' ? (
            <div className="p-8 flex-1 overflow-y-auto">
-             <h2 className="text-2xl font-bold mb-6 text-slate-800">Open a New Ticket</h2>
+             <div className="flex items-center gap-4 mb-6">
+               <button onClick={() => setSelected(null)} className="md:hidden text-slate-400 hover:text-slate-600">
+                 ← Back
+               </button>
+               <h2 className="text-2xl font-bold text-slate-800">Open a New Ticket</h2>
+             </div>
              <form onSubmit={handleSubmit} className="space-y-5 max-w-xl">
                <div>
                  <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Subject</label>
@@ -144,7 +150,7 @@ export default function CustomerSupportPage() {
                    value={formData.subject} 
                    onChange={e => setFormData({...formData, subject: e.target.value})} 
                    placeholder="Brief description of the issue"
-                   className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-primary/20 outline-none transition-all font-medium text-slate-800" 
+                   className="input-custom" 
                  />
                </div>
                <div>
@@ -152,7 +158,7 @@ export default function CustomerSupportPage() {
                  <select 
                    value={formData.priority} 
                    onChange={e => setFormData({...formData, priority: e.target.value})} 
-                   className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-primary/20 outline-none transition-all font-medium text-slate-800"
+                   className="input-custom"
                  >
                    <option value="low">Low</option>
                    <option value="normal">Normal</option>
@@ -162,16 +168,13 @@ export default function CustomerSupportPage() {
                </div>
                <div>
                  <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Message</label>
-                 <textarea 
-                   required 
-                   rows={6} 
-                   value={formData.message} 
-                   onChange={e => setFormData({...formData, message: e.target.value})} 
+                 <TiptapEditor
+                   value={formData.message}
+                   onChange={html => setFormData({...formData, message: html})}
                    placeholder="Describe your issue in detail..."
-                   className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-primary/20 outline-none transition-all font-medium text-slate-800 resize-none" 
                  />
                </div>
-               <button disabled={creating} type="submit" className="w-full py-3 bg-primary text-white font-bold text-sm rounded-xl hover:opacity-90 transition disabled:opacity-50">
+               <button disabled={creating} type="submit" className="btn-custom-primary w-full py-3">
                  {creating ? 'Submitting...' : 'Submit Ticket'}
                </button>
              </form>
@@ -182,9 +185,13 @@ export default function CustomerSupportPage() {
            <>
              {/* Thread Header */}
              <div className="p-6 border-b border-slate-200 flex items-start justify-between bg-slate-50/50">
-               <div>
-                 <h2 className="text-xl font-bold text-slate-800 mb-1">{thread.ticket.subject}</h2>
-                 <div className="text-xs text-slate-500 font-medium">
+               <div className="flex items-start gap-4">
+                 <button onClick={() => setSelected(null)} className="md:hidden text-slate-400 hover:text-slate-600 mt-1">
+                   ←
+                 </button>
+                 <div>
+                   <h2 className="text-xl font-bold text-slate-800 mb-1">{thread.ticket.subject}</h2>
+                   <div className="text-xs text-slate-500 font-medium">
                    Created on {new Date(thread.ticket.created_at).toLocaleString()}
                  </div>
                </div>
@@ -199,14 +206,15 @@ export default function CustomerSupportPage() {
                <div className="flex gap-4">
                  <div className="w-10 h-10 rounded-full bg-slate-200 text-slate-500 flex items-center justify-center font-bold text-sm shrink-0">Me</div>
                  <div className="flex-1">
-                   <div className="flex items-center gap-2 mb-1.5">
-                     <span className="text-sm font-bold text-slate-800">Me</span>
-                     <span className="text-xs text-slate-400 font-medium">Original</span>
-                   </div>
-                   <div className="bg-white border border-slate-200 shadow-sm rounded-2xl rounded-tl-none p-4 text-sm text-slate-600 whitespace-pre-wrap leading-relaxed">
-                     {thread.ticket.message}
-                   </div>
-                 </div>
+                    <div className="flex items-center gap-2 mb-1.5">
+                      <span className="text-sm font-bold text-slate-900">Me</span>
+                      <span className="text-xs text-slate-400 font-medium">Original</span>
+                    </div>
+                    <div 
+                      className="bg-white border border-slate-200 shadow-sm rounded-2xl rounded-tl-none p-4 text-sm text-slate-600 leading-relaxed"
+                      dangerouslySetInnerHTML={{ __html: thread.ticket.message }}
+                    />
+                  </div>
                </div>
 
                {/* Replies */}
@@ -219,36 +227,35 @@ export default function CustomerSupportPage() {
                    </div>
                    <div className={`flex-1 flex flex-col ${r.is_admin ? 'items-end' : ''}`}>
                      <div className={`flex items-center gap-2 mb-1.5 ${r.is_admin ? 'flex-row-reverse' : ''}`}>
-                       <span className="text-sm font-bold text-slate-800">{r.is_admin ? 'Tourbin Support' : (r.user_name || 'Me')}</span>
+                       <span className="text-sm font-bold text-slate-900">{r.is_admin ? 'Tourbin Support' : (r.user_name || 'Me')}</span>
                        <span className="text-xs text-slate-400 font-medium">{new Date(r.created_at).toLocaleString()}</span>
                      </div>
-                     <div className={`max-w-[85%] rounded-2xl p-4 text-sm whitespace-pre-wrap leading-relaxed shadow-sm ${
-                       r.is_admin
-                         ? 'bg-primary text-white rounded-tr-none'
-                         : 'bg-white border border-slate-200 text-slate-600 rounded-tl-none'
-                     }`}>
-                       {r.message}
-                     </div>
-                   </div>
+                      <div 
+                        className={`max-w-[85%] rounded-2xl p-4 text-sm leading-relaxed shadow-sm ${
+                          r.is_admin
+                            ? 'bg-primary text-white rounded-tr-none'
+                            : 'bg-white border border-slate-200 text-slate-600 rounded-tl-none'
+                        }`}
+                        dangerouslySetInnerHTML={{ __html: r.message }}
+                      />
+                    </div>
                  </div>
                ))}
              </div>
 
              {/* Reply Input Box */}
              {thread.ticket.status !== 'closed' && (
-               <div className="p-4 border-t border-slate-200 bg-white">
-                 <div className="flex gap-3">
-                   <textarea
-                     value={replyMessage}
-                     onChange={e => setReplyMessage(e.target.value)}
-                     placeholder="Type your reply to support..."
-                     rows={1}
-                     className="flex-1 bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm text-slate-800 placeholder-slate-400 resize-none focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all font-medium min-h-[50px] max-h-[150px]"
-                   />
-                   <button
-                     onClick={sendReply}
-                     disabled={sending || !replyMessage.trim()}
-                     className="px-6 py-2 rounded-xl bg-slate-900 text-white font-bold text-sm hover:opacity-90 transition disabled:opacity-50 self-end h-[50px]"
+                <div className="p-4 border-t border-slate-200 bg-white">
+                  <div className="flex flex-col gap-3">
+                    <TiptapEditor
+                      value={replyMessage}
+                      onChange={html => setReplyMessage(html)}
+                      placeholder="Type your reply to support..."
+                    />
+                    <button
+                      onClick={sendReply}
+                      disabled={sending || !replyMessage.replace(/<[^>]*>?/gm, '').trim()}
+                     className="btn-custom-primary px-6 py-2 self-end h-[50px]"
                    >
                      {sending ? '...' : 'Reply'}
                    </button>

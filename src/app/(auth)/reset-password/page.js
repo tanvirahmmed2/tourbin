@@ -53,11 +53,11 @@ function ResetPasswordContent() {
   if (success) {
     return (
       <div className="text-center">
-        <h2 className="text-xl font-bold mb-4">Password Reset!</h2>
-        <p className="text-muted text-sm mb-6">
+        <h2 className="text-2xl font-bold mb-4 text-slate-900">Password Reset!</h2>
+        <p className="text-slate-500 text-sm mb-6">
           Your password has been successfully reset. You can now log in with your new password.
         </p>
-        <Link href="/login" className="px-5 py-2.5 rounded-xl bg-primary text-white font-bold text-sm hover:bg-primary-dark transition disabled:opacity-50 w-full inline-block">
+        <Link href="/login" className="btn-custom-primary w-full inline-block text-center">
           Go to Login
         </Link>
       </div>
@@ -66,8 +66,8 @@ function ResetPasswordContent() {
 
   return (
     <>
-      <h2 className="text-xl font-bold text-center mb-2">Create New Password</h2>
-      <p className="text-center text-muted text-sm mb-6">
+      <h2 className="text-2xl font-bold text-center mb-2 text-slate-900">Create New Password</h2>
+      <p className="text-center text-slate-500 text-sm mb-6">
         Please enter your new password below.
       </p>
 
@@ -75,19 +75,19 @@ function ResetPasswordContent() {
 
       <form onSubmit={handleSubmit} className="form-group gap-md">
         <div className="flex flex-col gap-2 mb-4">
-          <label className="text-sm font-semibold text-text-2 mb-1" htmlFor="password">New Password</label>
+          <label className="block text-sm font-medium text-slate-600 mb-1.5" htmlFor="password">New Password</label>
           <input
             id="password"
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="bg-white/5 border border-border rounded-xl px-4 py-2.5 text-sm text-text placeholder-text-3 focus:outline-none focus:border-primary/50"
+            className="input-custom"
             required
             disabled={loading}
           />
         </div>
 
-        <button type="submit" disabled={loading} className="px-5 py-2.5 rounded-xl bg-primary text-white font-bold text-sm hover:bg-primary-dark transition disabled:opacity-50 w-full mt-4">
+        <button type="submit" disabled={loading} className="btn-custom-primary w-full mt-4">
           {loading ? 'Resetting...' : 'Reset Password'}
         </button>
       </form>

@@ -39,17 +39,17 @@ export default function ContactPage() {
 
   return (
     <div className="relative overflow-hidden pb-20">
-      <div className="absolute top-[10%] left-[15%] w-[600px] h-[600px] rounded-full bg-[radial-gradient(circle,rgba(99,102,241,0.06)_0%,transparent_70%)] pointer-events-none animate-[pulse_8s_ease-in-out_infinite]" />
+      <div className="absolute top-[10%] left-[15%] w-150 h-150 rounded-full bg-[radial-gradient(circle,rgba(99,102,241,0.06)_0%,transparent_70%)] pointer-events-none animate-[pulse_8s_ease-in-out_infinite]" />
 
       {/* Header */}
       <section className="py-16">
         <div className="container relative z-10">
           <div className="text-center flex flex-col items-center gap-4">
             <div className="badge badge-primary">Support</div>
-            <h1 className="text-[clamp(1.75rem,4vw,2.75rem)] font-extrabold tracking-tight leading-[1.15] max-w-[700px] text-text">
+            <h1 className="text-[clamp(1.75rem,4vw,2.75rem)] font-extrabold tracking-tight leading-[1.15] max-w-175 text-text">
               Get in touch with <span className="gradient-text">our team</span>
             </h1>
-            <p className="text-base text-text-2 max-w-[560px] leading-relaxed">
+            <p className="text-base text-text-2 max-w-140 leading-relaxed">
               Have questions about features, pricing, custom integrations, or custom enterprise terms? Let us know.
             </p>
           </div>
@@ -82,7 +82,7 @@ export default function ContactPage() {
                   <span className="text-3xl filter drop-shadow-[0_4px_8px_rgba(99,102,241,0.08)]">🏢</span>
                   <div>
                     <div className="font-bold text-xs uppercase tracking-wider text-text-3">Headquarters</div>
-                    <div className="text-sm text-text-2 font-bold mt-0.5">Disibin LTD, Dhaka, Bangladesh</div>
+                    <div className="text-sm text-text-2 font-bold mt-0.5">Disibin, Mymensingh</div>
                   </div>
                 </div>
 
@@ -90,7 +90,7 @@ export default function ContactPage() {
                   <span className="text-3xl filter drop-shadow-[0_4px_8px_rgba(99,102,241,0.08)]">📞</span>
                   <div>
                     <div className="font-bold text-xs uppercase tracking-wider text-text-3">Direct Phone</div>
-                    <div className="text-sm text-text-2 font-bold mt-0.5">+880 1700-000000</div>
+                    <div className="text-sm text-text-2 font-bold mt-0.5">+880 1805003886</div>
                   </div>
                 </div>
               </div>
@@ -130,7 +130,7 @@ export default function ContactPage() {
                     required
                     value={formData.name}
                     onChange={handleChange}
-                    placeholder="John Doe"
+                    placeholder="...."
                   />
                 </div>
 
@@ -144,7 +144,7 @@ export default function ContactPage() {
                       required
                       value={formData.email}
                       onChange={handleChange}
-                      placeholder="john@example.com"
+                      placeholder="....@mail.com"
                     />
                   </div>
 
@@ -156,7 +156,7 @@ export default function ContactPage() {
                       className="input-custom"
                       value={formData.phone}
                       onChange={handleChange}
-                      placeholder="+1 (555) 000-0000"
+                      placeholder="+880 18 000 000"
                     />
                   </div>
                 </div>

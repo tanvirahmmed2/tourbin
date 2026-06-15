@@ -5,11 +5,12 @@ export default async function AuthLayout({ children }) {
   await redirectIfAuthenticated();
   return (
     <div className="min-h-screen flex items-center justify-center p-10 bg-bg relative overflow-hidden">
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-[radial-gradient(circle,rgba(99,102,241,0.1)_0%,transparent_60%)] pointer-events-none z-0" />
-      <div className="relative z-10 w-full max-w-[440px] bg-gradient-card border border-border rounded-3xl p-16 backdrop-blur-md shadow-lg">
-        <div className="text-center mb-10">
-          <Link href="/" className="inline-flex items-center gap-2 text-2xl font-extrabold text-text no-underline">
-            <span className="bg-gradient-primary text-transparent bg-clip-text">✦</span> Tourbin
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-[radial-gradient(circle,rgba(14,165,233,0.12)_0%,transparent_60%)] pointer-events-none z-0" />
+      <div className="relative z-10 w-full max-w-[440px] bg-white border border-slate-200 rounded-2xl p-10 sm:p-12 shadow-xl shadow-slate-200/50">
+        <div className="text-center mb-10 flex justify-center">
+          <Link href="/" className="inline-flex items-center gap-2 text-2xl font-bold text-slate-900 no-underline tracking-tight">
+            <div className="w-8 h-8 rounded-lg bg-gradient-primary flex items-center justify-center text-white font-bold text-sm shadow-sm">T</div>
+            Tourbin
           </Link>
         </div>
         {children}

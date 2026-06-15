@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { PricingCards } from '@/components/marketing/PricingCards';
+import { PricingCards } from '@/components/card/PricingCards';
 
 export default function PricingSection() {
   return (
@@ -7,10 +7,10 @@ export default function PricingSection() {
       <div className="container">
         <div className="text-center flex flex-col items-center gap-4 mb-16">
           <div className="badge badge-primary">Simple pricing</div>
-          <h2 className="text-[clamp(1.75rem,4vw,2.75rem)] font-extrabold tracking-tight leading-[1.15] max-w-[700px] text-text">
+          <h2 className="text-[clamp(1.75rem,4vw,2.75rem)] font-extrabold tracking-tight leading-[1.15] max-w-[700px] text-slate-900">
             Plans that grow <span className="gradient-text">with your business</span>
           </h2>
-          <p className="text-base text-text-2 max-w-[560px] leading-relaxed">Choose a package that fits your needs.</p>
+          <p className="text-base text-slate-600 max-w-[560px] leading-relaxed">Choose a package that fits your needs.</p>
         </div>
         <PricingCards showDescriptions={true} />
         <p className="text-center text-text-3 text-sm mt-8">

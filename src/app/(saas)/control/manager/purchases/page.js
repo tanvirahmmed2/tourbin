@@ -74,57 +74,57 @@ export default function PurchasesPage() {
     <div className="max-w-6xl mx-auto">
       <div className="flex items-center justify-between mb-8">
         <div>
-          <h1 className="text-2xl font-extrabold text-text tracking-tight">Purchase Requests</h1>
-          <p className="text-sm text-text-2 mt-0.5">Approve pending purchases to activate new SaaS tenants.</p>
+          <h1 className="text-2xl font-extrabold text-slate-900 tracking-tight">Purchase Requests</h1>
+          <p className="text-sm text-slate-600 mt-0.5">Approve pending purchases to activate new SaaS tenants.</p>
         </div>
       </div>
 
       {error && <ErrorMessage message={error} onRetry={fetchPurchases} />}
 
-      <div className="bg-white border border-border rounded-2xl shadow-sm overflow-hidden">
+      <div className="bg-white border border-slate-200 rounded-2xl shadow-sm overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-left text-sm">
-            <thead className="bg-slate-50 border-b border-border">
+            <thead className="bg-slate-50 border-b border-slate-200">
               <tr>
-                <th className="px-6 py-4 font-bold text-text-2">Date</th>
-                <th className="px-6 py-4 font-bold text-text-2">User</th>
-                <th className="px-6 py-4 font-bold text-text-2">Requested Workspace</th>
-                <th className="px-6 py-4 font-bold text-text-2">Package</th>
-                <th className="px-6 py-4 font-bold text-text-2">Payment Details</th>
-                <th className="px-6 py-4 font-bold text-text-2 text-right">Action</th>
+                <th className="px-6 py-4 font-bold text-slate-500 uppercase tracking-wider text-xs">Date</th>
+                <th className="px-6 py-4 font-bold text-slate-500 uppercase tracking-wider text-xs">User</th>
+                <th className="px-6 py-4 font-bold text-slate-500 uppercase tracking-wider text-xs">Requested Workspace</th>
+                <th className="px-6 py-4 font-bold text-slate-500 uppercase tracking-wider text-xs">Package</th>
+                <th className="px-6 py-4 font-bold text-slate-500 uppercase tracking-wider text-xs">Payment Details</th>
+                <th className="px-6 py-4 font-bold text-slate-500 uppercase tracking-wider text-xs text-right">Action</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-border">
+            <tbody className="divide-y divide-slate-100">
               {purchases.length === 0 ? (
                 <tr>
-                  <td colSpan="6" className="px-6 py-8 text-center text-text-3">No purchases found.</td>
+                  <td colSpan="6" className="px-6 py-8 text-center text-slate-500 font-medium">No purchases found.</td>
                 </tr>
               ) : (
                 purchases.map((p) => (
                   <tr key={p.purchase_id} className="hover:bg-slate-50/50 transition-colors">
-                    <td className="px-6 py-4 whitespace-nowrap text-text-2">
+                    <td className="px-6 py-4 whitespace-nowrap text-slate-600 font-medium">
                       {new Date(p.created_at).toLocaleDateString()}
                     </td>
                     <td className="px-6 py-4">
-                      <div className="font-bold text-text">{p.user_name || 'Unknown'}</div>
-                      <div className="text-xs text-text-3">{p.user_email}</div>
+                      <div className="font-bold text-slate-900">{p.user_name || 'Unknown'}</div>
+                      <div className="text-xs text-slate-500 font-medium">{p.user_email}</div>
                     </td>
                     <td className="px-6 py-4">
-                      <div className="font-bold text-text">{p.requested_tenant_name}</div>
+                      <div className="font-bold text-slate-900">{p.requested_tenant_name}</div>
                       {p.note && (
                         <div className="text-[10px] text-amber-700 font-bold bg-amber-50 px-2 py-1 rounded mt-1 border border-amber-200 inline-block">{p.note}</div>
                       )}
                       {p.requested_custom_domain ? (
-                        <div className="text-xs text-text-3 font-mono">{p.requested_custom_domain}</div>
+                        <div className="text-xs text-slate-500 font-mono mt-0.5">{p.requested_custom_domain}</div>
                       ) : (
-                        <div className="text-xs text-text-3 font-mono">tourbin.com/{p.requested_tenant_slug}</div>
+                        <div className="text-xs text-slate-500 font-mono mt-0.5">tourbin.com/{p.requested_tenant_slug}</div>
                       )}
                     </td>
                     <td className="px-6 py-4">
-                      <div className="font-medium text-text">
+                      <div className="font-bold text-slate-900">
                         {p.package_name || `Package #${p.package_id}`}
                       </div>
-                      <div className="text-xs text-text-2 mt-0.5">
+                      <div className="text-xs text-slate-600 mt-0.5 font-medium">
                         {p.duration_months} Month{p.duration_months > 1 ? 's' : ''}
                       </div>
                     </td>
@@ -137,9 +137,9 @@ export default function PurchasesPage() {
                         }`}>
                           {p.status}
                         </span>
-                        <span className="font-bold text-text">৳{p.amount}</span>
+                        <span className="font-bold text-slate-900">৳{p.amount}</span>
                       </div>
-                      <div className="text-xs text-text-3 mt-1 uppercase tracking-widest">{p.payment_method}: {p.transaction_id}</div>
+                      <div className="text-xs text-slate-500 mt-1 uppercase tracking-widest font-medium">{p.payment_method}: {p.transaction_id}</div>
                     </td>
                     <td className="px-6 py-4 text-right space-x-2">
                       {p.status === 'pending' && (
@@ -147,7 +147,7 @@ export default function PurchasesPage() {
                           <button
                             onClick={() => handleApprove(p.purchase_id)}
                             disabled={approving === p.purchase_id || declining === p.purchase_id || deleting === p.purchase_id}
-                            className="px-3 py-1.5 bg-primary text-white text-xs font-bold rounded-lg hover:opacity-90 disabled:opacity-50 transition-all shadow-sm"
+                            className="btn-custom-primary px-3 py-1.5 text-xs font-bold"
                           >
                             {approving === p.purchase_id ? 'Approving...' : 'Approve'}
                           </button>

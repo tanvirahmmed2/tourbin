@@ -60,15 +60,15 @@ export async function PATCH(request, { params }) {
   try {
     const auth = await isManager();
     if (!auth.success) return NextResponse.json(auth, { status: 403 });
-    const { status, name, website_status, primary_domain } = await request.json();
+    const { status, name, subscription_id, subscription_status, primary_domain } = await request.json();
     const { tenantId } = await params;
     
     // 1. Update Tenant
     await query("UPDATE ts_tenants SET status = COALESCE($1, status), name = COALESCE($2, name) WHERE tenant_id = $3", [status, name, tenantId]);
 
-    // 2. Update Website Status
-    if (website_status) {
-      await query("UPDATE tour_websites SET status = $1 WHERE tenant_id = $2", [website_status, tenantId]);
+    // 2. Update Subscription Status
+    if (subscription_status && subscription_id) {
+      await query("UPDATE ts_subscriptions SET status = $1 WHERE subscription_id = $2 AND tenant_id = $3", [subscription_status, subscription_id, tenantId]);
     }
 
     // 3. Update Primary Domain

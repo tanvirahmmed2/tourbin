@@ -19,15 +19,26 @@ export async function GET(request) {
         return NextResponse.json({ success: true, data: { ticket: ticketRes.rows[0], replies: repliesRes.rows } });
     }
 
-    const res = await query(`
+    const status = searchParams.get('status');
+
+    let queryStr = `
       SELECT 
         t.*, 
         ten.name as tenant_name,
         (SELECT COUNT(*) FROM ts_support_replies r WHERE r.ticket_id = t.ticket_id) as reply_count
       FROM ts_support_tickets t 
       LEFT JOIN ts_tenants ten ON ten.tenant_id = t.tenant_id 
-      ORDER BY t.created_at DESC
-    `);
+    `;
+    const params = [];
+
+    if (status) {
+      queryStr += ` WHERE t.status = $1`;
+      params.push(status);
+    }
+
+    queryStr += ` ORDER BY t.created_at DESC`;
+
+    const res = await query(queryStr, params);
     return NextResponse.json({ success: true, data: { tickets: res.rows } });
   } catch (err) {
     return NextResponse.json({ success: false, message: err.message }, { status: 500 });

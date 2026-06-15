@@ -137,7 +137,6 @@ export default function FeaturesPage() {
             <h2 className="text-[clamp(2rem,5vw,3.5rem)] font-black tracking-tight leading-[1.1] text-text">Experience the power of Tourbin</h2>
             <p className="text-base text-text-2 leading-relaxed max-w-[500px] mt-2">See why tour operators are moving away from manual operations. Try it free.</p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mt-4">
-              <Link href="/register" className="px-6 py-3.5 rounded-xl bg-primary text-white font-bold text-sm hover:bg-primary-dark transition-all duration-300 hover:shadow-[0_4px_15px_rgba(79,70,229,0.25)] active:scale-[0.98]">Start Your Free Trial</Link>
               <Link href="/pricing" className="px-6 py-3.5 rounded-xl bg-white border border-slate-200 text-text-2 hover:text-text font-bold text-sm hover:bg-slate-5 transition-all duration-300 shadow-sm shadow-slate-100">View Plans & Pricing</Link>
             </div>
           </div>

@@ -185,7 +185,7 @@ export default function WorkspaceManagementPage() {
                 </div>
                 <div>
                   <div className="text-[10px] uppercase text-text-3 font-bold">Price</div>
-                  <div className="text-sm font-bold text-text mt-1">${subscription.monthly_price}/mo</div>
+                  <div className="text-sm font-bold text-text mt-1">৳{subscription.monthly_price}/mo</div>
                 </div>
               </div>
               <div>

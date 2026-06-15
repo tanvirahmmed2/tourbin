@@ -158,7 +158,7 @@ export default function CheckoutPage({ params }) {
                   onChange={handleChange} 
                   required 
                   className="w-full px-4 py-3 bg-slate-50 border border-border rounded-xl focus:ring-2 focus:ring-primary outline-none transition-all"
-                  placeholder="e.g. Dream Travels Ltd."
+                  placeholder="e.g. My Tour Company"
                 />
               </div>
 
@@ -172,7 +172,7 @@ export default function CheckoutPage({ params }) {
                     onChange={handleChange} 
                     required 
                     className="w-full px-4 py-3 bg-white border border-border rounded-xl focus:ring-2 focus:ring-primary outline-none transition-all"
-                    placeholder="e.g. www.dreamtravels.com"
+                    placeholder="e.g. www.mytourcompany.com"
                   />
                 </div>
                 <div>

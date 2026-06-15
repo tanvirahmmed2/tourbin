@@ -62,15 +62,22 @@ export default function PackagesPage() {
                   <h3 className="font-bold text-lg text-text">{pkg.name}</h3>
                   <span className="badge badge-primary">{pkg.subscriber_count} tenants</span>
                 </div>
-                <p className="text-sm text-text-2 min-h-[40px]">{pkg.description}</p>
+                <div 
+                  className="text-sm text-text-2 min-h-[40px] prose prose-sm max-w-none prose-invert"
+                  dangerouslySetInnerHTML={{ __html: pkg.description }}
+                />
                 <div className="flex gap-6">
                   <div>
-                    <div className="text-[0.7rem] text-text-3 uppercase tracking-[0.06em] mb-0.5">Monthly</div>
-                    <div className="text-2xl font-extrabold text-text">${Number(pkg.monthly_price).toFixed(0)}</div>
+                    <div className="text-[0.65rem] font-bold text-text-3 uppercase tracking-wider mb-1">Monthly</div>
+                    <div className="text-2xl font-extrabold text-text">৳{Number(pkg.monthly_price).toFixed(0)}</div>
                   </div>
                   <div>
-                    <div className="text-[0.7rem] text-text-3 uppercase tracking-[0.06em] mb-0.5">Yearly</div>
-                    <div className="text-2xl font-extrabold text-success">${Number(pkg.yearly_price).toFixed(0)}</div>
+                    <div className="text-[0.65rem] font-bold text-text-3 uppercase tracking-wider mb-1">Yearly</div>
+                    <div className="text-2xl font-extrabold text-success">৳{Number(pkg.yearly_price).toFixed(0)}</div>
+                  </div>
+                  <div>
+                    <div className="text-[0.65rem] font-bold text-text-3 uppercase tracking-wider mb-1">Setup Fee</div>
+                    <div className="text-2xl font-extrabold text-[#c4b5fd]">৳{Number(pkg.setup_fee || 0).toFixed(0)}</div>
                   </div>
                 </div>
                 {features.length > 0 && (

@@ -41,14 +41,14 @@ export function PricingCards({ showDescriptions = false }) {
         return (
         <div 
           key={pkg.package_id} 
-          className={`relative rounded-3xl p-8 transition-all duration-300 flex flex-col gap-6 ${
+          className={`relative rounded-2xl p-8 transition-all duration-300 flex flex-col gap-6 ${
             isPopular 
-              ? 'bg-primary text-white shadow-xl shadow-primary/20 scale-105 z-10 border-0' 
-              : 'bg-white border border-border shadow-sm hover:border-primary/30 hover:shadow-md'
+              ? 'bg-primary text-white shadow-lg shadow-primary/20 scale-105 z-10 border-0' 
+              : 'bg-white border border-slate-200 shadow-sm hover:border-primary/40 hover:shadow-md'
           }`}
         >
           {isPopular && (
-            <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-white text-primary text-xs font-black py-1.5 px-5 rounded-full whitespace-nowrap tracking-widest uppercase border border-primary/10 shadow-sm">
+            <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-slate-900 text-white text-[10px] font-bold py-1 px-4 rounded-full whitespace-nowrap tracking-widest uppercase shadow-sm">
               Most Popular
             </div>
           )}
@@ -56,7 +56,10 @@ export function PricingCards({ showDescriptions = false }) {
           <div>
             <h3 className={`text-2xl font-black tracking-tight mb-2 ${isPopular ? 'text-white' : 'text-text'}`}>{pkg.name}</h3>
             {showDescriptions && pkg.description && (
-              <p className={`text-sm leading-relaxed mt-2 min-h-[40px] ${isPopular ? 'text-white/80' : 'text-text-2'}`}>{pkg.description}</p>
+              <div 
+                className={`text-sm leading-relaxed mt-2 min-h-[40px] prose prose-sm max-w-none ${isPopular ? 'text-white/80 prose-invert' : 'text-text-2'}`}
+                dangerouslySetInnerHTML={{ __html: pkg.description }}
+              />
             )}
           </div>
 

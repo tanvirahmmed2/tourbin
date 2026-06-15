@@ -58,9 +58,10 @@ export async function getAuthenticatedContext() {
 
         if (!token) return null;
 
-        const decoded = jwt.verify(token, JWT_SECRET);
+        const decoded = verifyToken(token);
+        if (!decoded) return null;
         const userId = decoded.id || decoded._id || decoded.user_id;
-        if (!decoded || !userId) return null;
+        if (!userId) return null;
 
         const res = await query("SELECT user_id, name, email, role FROM ts_users WHERE user_id = $1", [userId]);
 

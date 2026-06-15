@@ -48,14 +48,14 @@ export default function ControlDashboard() {
     <div className="w-full">
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
         <div>
-          <h1 className="text-3xl font-extrabold text-text tracking-tight">
+          <h1 className="text-3xl font-extrabold text-slate-900 tracking-tight">
             Welcome back, {data.user?.name?.split(' ')[0] || 'Manager'} 👋
           </h1>
-          <p className="text-sm text-text-3 mt-1.5 font-medium">Here's what's happening on your SaaS platform today.</p>
+          <p className="text-sm text-slate-500 mt-1.5 font-medium">Here's what's happening on your SaaS platform today.</p>
         </div>
         <Link 
           href="/control/tenants" 
-          className="px-5 py-2.5 rounded-xl bg-primary text-white font-bold text-xs hover:bg-primary-dark transition-all duration-300 hover:shadow-[0_4px_12px_rgba(79,70,229,0.25)] active:scale-[0.98] inline-block"
+          className="btn-custom-primary px-5 py-2.5 text-xs inline-block"
         >
           Manage Tenants →
         </Link>
@@ -65,46 +65,46 @@ export default function ControlDashboard() {
         {STAT_CARDS.map((s) => (
           <div 
             key={s.label} 
-            className="relative bg-white/5 border border-primary/20 rounded-2xl p-6 transition-all duration-300 hover:bg-primary/10 hover:-translate-y-0.5"
+            className="relative bg-white border border-slate-200 rounded-2xl p-6 transition-all duration-300 shadow-sm hover:border-sky-200 hover:shadow-md hover:-translate-y-0.5"
           >
             <div className="flex justify-between items-center gap-4 mb-4">
-              <div className="text-[10px] font-bold uppercase tracking-wider text-text-3">{s.label}</div>
-              <div className="text-xl filter drop-shadow-[0_4px_8px_rgba(139,92,246,0.08)]">{s.icon}</div>
+              <div className="text-[10px] font-bold uppercase tracking-wider text-slate-500">{s.label}</div>
+              <div className="text-xl filter drop-shadow-sm">{s.icon}</div>
             </div>
-            <div className="text-2xl font-black text-text tracking-tight leading-none mb-2">{s.value}</div>
-            <div className="text-[10px] font-bold text-primary tracking-wide">{s.trend}</div>
+            <div className="text-2xl font-extrabold text-slate-900 tracking-tight leading-none mb-2">{s.value}</div>
+            <div className="text-[10px] font-bold text-sky-600 tracking-wide">{s.trend}</div>
           </div>
         ))}
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         {/* Recent Tenants */}
-        <div className="bg-white/5 border border-border rounded-3xl overflow-hidden">
-          <div className="flex items-center justify-between p-5 px-6 border-b border-border">
-            <span className="text-base font-bold text-text tracking-tight">Recent Tenants</span>
-            <Link href="/control/tenants" className="text-xs text-primary hover:underline font-bold">View all →</Link>
+        <div className="bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm">
+          <div className="flex items-center justify-between p-5 px-6 border-b border-slate-100 bg-slate-50/50">
+            <span className="text-base font-bold text-slate-900 tracking-tight">Recent Tenants</span>
+            <Link href="/control/tenants" className="text-xs text-sky-600 hover:underline font-bold">View all →</Link>
           </div>
           {recentTenants.length === 0 ? (
             <EmptyState icon="🏢" title="No tenants yet" />
           ) : (
             <div className="overflow-x-auto">
-              <table className="w-full border-collapse table-custom">
-                <thead>
+              <table className="w-full text-left text-sm">
+                <thead className="bg-slate-50 border-b border-slate-200 text-slate-500 uppercase tracking-wider">
                   <tr>
-                    <th>Name</th>
-                    <th>Plan</th>
-                    <th>Status</th>
+                    <th className="px-6 py-4 font-semibold">Name</th>
+                    <th className="px-6 py-4 font-semibold">Plan</th>
+                    <th className="px-6 py-4 font-semibold">Status</th>
                   </tr>
                 </thead>
-                <tbody>
+                <tbody className="divide-y divide-slate-100">
                   {recentTenants.map((t) => (
-                    <tr key={t.tenant_id}>
-                      <td className="px-4 py-3.5">
-                        <div className="font-bold text-text text-sm">{t.name}</div>
-                        <div className="text-[10px] text-text-3 font-bold uppercase tracking-wider mt-0.5">{t.slug}</div>
+                    <tr key={t.tenant_id} className="hover:bg-slate-50/50 transition-colors">
+                      <td className="px-6 py-4">
+                        <div className="font-bold text-slate-900 text-sm">{t.name}</div>
+                        <div className="text-[10px] text-slate-500 font-bold uppercase tracking-wider mt-0.5">{t.slug}</div>
                       </td>
-                      <td className="text-text-2 text-sm font-bold">{t.plan_name || 'No Plan'}</td>
-                      <td><StatusBadge status={t.status} /></td>
+                      <td className="px-6 py-4 text-slate-600 text-sm font-bold">{t.plan_name || 'No Plan'}</td>
+                      <td className="px-6 py-4"><StatusBadge status={t.status} /></td>
                     </tr>
                   ))}
                 </tbody>
@@ -114,31 +114,31 @@ export default function ControlDashboard() {
         </div>
 
         {/* Recent Payments */}
-        <div className="bg-white/5 border border-border rounded-3xl overflow-hidden">
-          <div className="flex items-center justify-between p-5 px-6 border-b border-border">
-            <span className="text-base font-bold text-text tracking-tight">Recent Payments</span>
-            <Link href="/control/payments" className="text-xs text-primary hover:underline font-bold">View all →</Link>
+        <div className="bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm">
+          <div className="flex items-center justify-between p-5 px-6 border-b border-slate-100 bg-slate-50/50">
+            <span className="text-base font-bold text-slate-900 tracking-tight">Recent Payments</span>
+            <Link href="/control/payments" className="text-xs text-sky-600 hover:underline font-bold">View all →</Link>
           </div>
           {recentPayments.length === 0 ? (
             <EmptyState icon="💰" title="No payments yet" />
           ) : (
             <div className="overflow-x-auto">
-              <table className="w-full border-collapse table-custom">
-                <thead>
+              <table className="w-full text-left text-sm">
+                <thead className="bg-slate-50 border-b border-slate-200 text-slate-500 uppercase tracking-wider">
                   <tr>
-                    <th>Tenant</th>
-                    <th>Amount</th>
-                    <th>Status</th>
+                    <th className="px-6 py-4 font-semibold">Tenant</th>
+                    <th className="px-6 py-4 font-semibold">Amount</th>
+                    <th className="px-6 py-4 font-semibold">Status</th>
                   </tr>
                 </thead>
-                <tbody>
+                <tbody className="divide-y divide-slate-100">
                   {recentPayments.map((p) => (
-                    <tr key={p.payment_id}>
-                      <td className="font-bold text-text text-sm">{p.tenant_name}</td>
-                      <td className="font-black text-success text-sm">
+                    <tr key={p.payment_id} className="hover:bg-slate-50/50 transition-colors">
+                      <td className="px-6 py-4 font-bold text-slate-900 text-sm">{p.tenant_name}</td>
+                      <td className="px-6 py-4 font-extrabold text-emerald-600 text-sm">
                         ${parseFloat(p.amount || 0).toFixed(2)}
                       </td>
-                      <td><StatusBadge status={p.status} /></td>
+                      <td className="px-6 py-4"><StatusBadge status={p.status} /></td>
                     </tr>
                   ))}
                 </tbody>

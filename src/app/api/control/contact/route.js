@@ -17,7 +17,19 @@ export async function GET(request) {
         return NextResponse.json({ success: true, data: { contact: res.rows[0] } });
     }
 
-    const res = await query("SELECT * FROM ts_contact ORDER BY created_at DESC");
+    const status = searchParams.get('status');
+
+    let queryStr = "SELECT * FROM ts_contact";
+    const params = [];
+
+    if (status) {
+      queryStr += " WHERE status = $1";
+      params.push(status);
+    }
+
+    queryStr += " ORDER BY created_at DESC";
+
+    const res = await query(queryStr, params);
     return NextResponse.json({ success: true, data: { contacts: res.rows } });
   } catch (err) {
     return NextResponse.json({ success: false, message: err.message }, { status: 500 });

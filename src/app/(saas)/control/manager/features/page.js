@@ -59,32 +59,32 @@ export default function FeaturesPage() {
   return (
     <div className="max-w-4xl mx-auto">
       <div className="flex items-center gap-4 mb-8">
-        <Link href="/control/manager/packages" className="px-4 py-2 text-sm font-bold text-text-2 bg-white border border-border rounded-xl hover:bg-slate-50 transition-colors">
+        <Link href="/control/manager/packages" className="px-4 py-2 text-sm font-bold text-slate-600 bg-white border border-slate-200 rounded-xl hover:bg-slate-50 transition-colors shadow-sm">
           ← Back to Packages
         </Link>
         <div>
-          <h1 className="text-2xl font-extrabold text-text tracking-tight">Manage Features</h1>
-          <p className="text-sm text-text-2 mt-0.5">Global list of features that can be assigned to packages</p>
+          <h1 className="text-2xl font-extrabold text-slate-900 tracking-tight">Manage Features</h1>
+          <p className="text-sm text-slate-600 mt-0.5">Global list of features that can be assigned to packages</p>
         </div>
       </div>
 
       {error && <ErrorMessage message={error} onRetry={fetchFeatures} />}
 
-      <div className="bg-white border border-border rounded-2xl shadow-sm overflow-hidden mb-6">
-        <div className="p-6 border-b border-border bg-slate-50">
+      <div className="bg-white border border-slate-200 rounded-2xl shadow-sm overflow-hidden mb-6">
+        <div className="p-6 border-b border-slate-200 bg-slate-50">
           <form onSubmit={handleAddFeature} className="flex items-center gap-3">
             <input 
               type="text" 
               value={newFeatureName} 
               onChange={(e) => setNewFeatureName(e.target.value)} 
               placeholder="e.g. Dedicated Account Manager" 
-              className="flex-1 px-4 py-2.5 bg-white border border-border rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all text-sm font-medium text-text" 
+              className="input-custom flex-1" 
               required
             />
             <button 
               type="submit" 
               disabled={isAdding || !newFeatureName.trim()} 
-              className="px-6 py-2.5 bg-primary text-white text-sm font-bold rounded-xl hover:opacity-90 transition-all shadow-sm disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap"
+              className="btn-custom-primary px-6 py-2.5 text-sm whitespace-nowrap"
             >
               {isAdding ? 'Adding...' : 'Add Feature'}
             </button>
@@ -93,23 +93,23 @@ export default function FeaturesPage() {
 
         <div className="p-0">
           {features.length === 0 ? (
-            <div className="p-8 text-center text-text-2">No features found. Add one above.</div>
+            <div className="p-8 text-center text-slate-600 font-medium">No features found. Add one above.</div>
           ) : (
-            <ul className="divide-y divide-border">
+            <ul className="divide-y divide-slate-100">
               {features.map((f) => (
                 <li key={f.feature_id} className="flex items-center justify-between p-4 hover:bg-slate-50 transition-colors group">
                   <div className="flex items-center gap-3">
-                    <span className="flex items-center justify-center w-8 h-8 rounded-lg bg-primary/10 text-primary text-sm font-bold shrink-0">
+                    <span className="flex items-center justify-center w-8 h-8 rounded-lg bg-sky-50 text-sky-600 text-sm font-bold shrink-0">
                       ✓
                     </span>
                     <div>
-                      <div className="font-bold text-sm text-text">{f.name}</div>
-                      <div className="text-xs text-text-3 font-mono mt-0.5">{f.key}</div>
+                      <div className="font-bold text-sm text-slate-900">{f.name}</div>
+                      <div className="text-xs text-slate-500 font-mono mt-0.5">{f.key}</div>
                     </div>
                   </div>
                   <button 
                     onClick={() => handleDelete(f.feature_id)}
-                    className="px-3 py-1.5 text-xs font-bold text-danger bg-danger/10 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity hover:bg-danger hover:text-white"
+                    className="px-3 py-1.5 text-xs font-bold text-red-600 bg-red-50 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity hover:bg-red-600 hover:text-white"
                   >
                     Delete
                   </button>

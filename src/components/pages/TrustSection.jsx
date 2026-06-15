@@ -1,4 +1,4 @@
-import { TrustStats } from '@/components/marketing/TrustStats';
+import { TrustStats } from '@/components/card/TrustStats';
 
 export default function TrustSection() {
   return (

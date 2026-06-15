@@ -41,29 +41,29 @@ export default function CreateTenantPage() {
     <div className="max-w-xl">
       <div className={"flex items-start justify-between mb-8"}>
         <div>
-          <h1 className={"text-3xl font-extrabold text-text tracking-tight"}>New Tenant</h1>
-          <p className={"text-sm text-text-2 mt-1"}>Register a new organisation on the platform</p>
+          <h1 className={"text-3xl font-extrabold text-slate-900 tracking-tight"}>New Tenant</h1>
+          <p className={"text-sm text-slate-600 mt-1"}>Register a new organisation on the platform</p>
         </div>
       </div>
 
-      <div className={"bg-white/5 border border-border rounded-2xl overflow-hidden"}>
+      <div className={"bg-white border border-slate-200 shadow-sm rounded-2xl overflow-hidden"}>
         <form onSubmit={handleSubmit} className="p-6 flex flex-col gap-5">
           {error && (
-            <div className="bg-danger/10 border border-danger/30 rounded-lg px-4 py-3 text-danger text-sm">
+            <div className="bg-red-50 border border-red-200 rounded-lg px-4 py-3 text-red-600 text-sm font-medium">
               {error}
             </div>
           )}
 
           <div className="flex flex-col gap-2 mb-4">
-            <label className="text-sm font-semibold text-text-2 mb-1">Organisation Name *</label>
-            <input className="bg-white/5 border border-border rounded-xl px-4 py-2.5 text-sm text-text placeholder-text-3 focus:outline-none focus:border-primary/50" value={form.name} onChange={set('name')} required placeholder="Acme Tours Ltd" />
+            <label className="text-sm font-semibold text-slate-700 mb-1">Organisation Name *</label>
+            <input className="input-custom" value={form.name} onChange={set('name')} required placeholder="Acme Tours Ltd" />
           </div>
 
           <div className="flex flex-col gap-2 mb-4">
-            <label className="text-sm font-semibold text-text-2 mb-1">Subdomain Slug *</label>
+            <label className="text-sm font-semibold text-slate-700 mb-1">Workspace Slug *</label>
             <div className="flex items-center">
               <input
-                className="bg-white/5 border border-border rounded-l-lg border-r-0 px-4 py-2.5 text-sm text-text placeholder-text-3 focus:outline-none focus:border-primary/50 flex-1"
+                className="input-custom rounded-r-none border-r-0 flex-1"
                 value={form.slug}
                 onChange={setSlug}
                 required
@@ -71,23 +71,23 @@ export default function CreateTenantPage() {
                 pattern="[a-z0-9\-]+"
                 title="Lowercase letters, numbers, and hyphens only"
               />
-              <span className="bg-surface border border-border border-l-0 px-3.5 py-2.5 text-sm text-text-3 rounded-r-lg whitespace-nowrap">
+              <span className="bg-slate-50 border border-slate-200 border-l-0 px-3.5 py-2.5 text-sm text-slate-500 rounded-r-lg whitespace-nowrap font-medium">
                 .yourdomain.com
               </span>
             </div>
           </div>
 
           <div className="flex flex-col gap-2 mb-4">
-            <label className="text-sm font-semibold text-text-2 mb-1">Status</label>
-            <select className="bg-white/5 border border-border rounded-xl px-4 py-2.5 text-sm text-text placeholder-text-3 focus:outline-none focus:border-primary/50" value={form.status} onChange={set('status')}>
+            <label className="text-sm font-semibold text-slate-700 mb-1">Status</label>
+            <select className="input-custom" value={form.status} onChange={set('status')}>
               <option value="active">Active</option>
               <option value="inactive">Inactive</option>
             </select>
           </div>
 
           <div className="flex gap-3 justify-end pt-1">
-            <button type="button" className="px-5 py-2.5 rounded-xl bg-white/10 text-text font-bold text-sm hover:bg-white/20 transition disabled:opacity-50" onClick={() => router.back()} disabled={saving}>Cancel</button>
-            <button type="submit" className="px-5 py-2.5 rounded-xl bg-primary text-white font-bold text-sm hover:bg-primary-dark transition disabled:opacity-50" disabled={saving}>
+            <button type="button" className="px-5 py-2.5 rounded-xl bg-white border border-slate-200 text-slate-700 font-bold text-sm hover:bg-slate-50 transition disabled:opacity-50 shadow-sm" onClick={() => router.back()} disabled={saving}>Cancel</button>
+            <button type="submit" className="btn-custom-primary px-5 py-2.5 text-sm" disabled={saving}>
               {saving ? 'Creating…' : 'Create Tenant'}
             </button>
           </div>

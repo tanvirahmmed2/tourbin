@@ -35,12 +35,12 @@ export function TestimonialCards() {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-12 max-w-6xl mx-auto">
       {testimonials.map((t, index) => (
-        <div key={t.id || index} className="group relative border border-slate-200/60 rounded-[2rem] p-8 flex flex-col gap-6 bg-white shadow-sm hover:shadow-xl hover:shadow-primary/5 hover:-translate-y-2 transition-all duration-300" style={{ animationDelay: `${index * 0.15}s` }}>
-          <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-br from-primary/5 to-transparent rounded-bl-full pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+        <div key={t.id || index} className="group relative border border-slate-200 rounded-2xl p-8 flex flex-col gap-6 bg-white shadow-sm hover:shadow-md hover:border-sky-200 hover:-translate-y-1 transition-all duration-300" style={{ animationDelay: `${index * 0.15}s` }}>
+          <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-br from-sky-50 to-transparent rounded-bl-full pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
           <div className="text-warning text-sm tracking-wide">
             {'★'.repeat(t.rating || 5)}
           </div>
-          <p className="text-[15px] text-text-2 leading-relaxed italic flex-1 relative z-10 font-medium">
+          <p className="text-[15px] text-slate-600 leading-relaxed italic flex-1 relative z-10 font-medium">
             "{t.message}"
           </p>
           <div className="flex items-center gap-4 pt-5 border-t border-slate-100/80">
